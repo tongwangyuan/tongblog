@@ -1,0 +1,286 @@
+body,
+a {
+    color: aquamarine;
+}
+body {
+    padding-bottom: 25px;
+    min-height: 700px;
+    position: relative;
+}
+textarea {
+    resize: none;
+}
+
+/*common*/
+.mg10{
+    margin: 10px;
+}
+.w900 {
+    width: 100%;
+    margin: 0 auto;
+}
+.btnThis,
+.btnThis:hover,
+.btnThis:focus,
+.btnThis:visited,
+.btnThis:active {
+    background: aquamarine;
+    color: #fff;
+    font-weight: 800;
+}
+
+/*--------------footer-----------*/
+
+.footer {
+    margin: 5px auto 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.footer div {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 18px;
+}
+@media screen and (min-width:900px) {
+    .w900 {
+        width: 900px;
+        margin: 0 auto;
+    }
+    span.time {
+        font-size: 18px;
+    }
+    .head span.menu {
+        display: inline-block;
+        float: right;
+    }
+    header.head span.sign {
+        font-size: 25px;
+    }
+    header.head {
+        padding: 0 50px;
+        font-size: 25px;
+    }
+}
+
+/*------------directive----------*/
+
+.gotop {
+    width: 35px;
+    height: 35px;
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+}
+.gotop i {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    font-size: 35px;
+}
+
+/*------------评论---------------*/
+
+.comment {
+    padding: 5px;
+    border-top: 1px solid aquamarine;
+    border-bottom: 1px solid aquamarine;
+}
+.comment-info .icon {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    float: left;
+    margin: 0 10px;
+}
+span.commentUserName {
+    font-weight: 800;
+    margin: 0 10px;
+}
+.comment-info .icon img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.rpBtn span {
+    float: right;
+    color: aquamarine;
+}
+.form-reply {
+    height: 60px;
+    /*overflow-y: scroll;*/
+    padding: 0 15px;
+}
+.form-reply textarea {
+    width: 100%;
+    height: 100%;
+}
+
+/*--------reply------------------*/
+
+.reply {
+    border-top: 1px dashed aquamarine;
+    border-bottom: 1px dashed aquamarine;
+    border-left: 5px solid aquamarine;
+    padding: 5px 0 5px 10px;
+}
+.reply-content {
+    margin-bottom: 8px;
+}
+.reply-name {
+    margin-right: 10px;
+}
+i.fa-reply,
+i.fa-pencil-square-o,
+i.fa-pencil,
+i.fa-heart,
+i.fa-trash,
+i.fa-heart-o {
+    font-size: 20px;
+    color: aquamarine;
+}
+span.remove-comment {
+    float: right;
+}
+
+/*-------回复textarea------------------*/
+
+.form-reply {
+    margin: 5px;
+    position: relative;
+}
+.form-reply textarea {
+    border-radius: 5px;
+}
+i.fa-pencil-square-o {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+/*-------support------*/
+
+.support {
+    margin: 5px;
+}
+.support i {
+    margin: 5px 10px;
+    //float: right;
+    border: 1px solid aquamarine;
+}
+i.liked {
+    color: aquamarine;
+}
+i.noliked {
+    color: #f1f1f1;
+    border: 1px solid aquamarine;
+}
+
+/*------------------评论textarea----------------*/
+
+.commentArea {
+    padding: 10px;
+}
+.commentArea textarea {
+    width: 100%;
+}
+.cmBtn {
+    background: aquamarine;
+    color: #fff;
+}
+
+/*-----------------admin----------------------*/
+
+.tableBlog {
+    width: 80%;
+    margin: 5px auto;
+}
+.tableBlog tr {
+    height: 45px;
+    padding: 5px
+}
+.tableBlog td {
+    margin: 5px 5px;
+}
+
+/*----------------login--------------------------*/
+
+img.authCodeSrc {
+    display: block;
+    width: 100%;
+    height: 60px;
+}
+input.error {
+    border: 1px solid red;
+}
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: aquamarine;
+    border-color: aquamarine;
+}
+.pagination>li>a,
+.pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: aquamarine;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+.modal.in .modal-dialog{
+    margin-top: 150px;
+}
+/*-----------------sns--------------*/
+.sns-container{
+    margin-top: 20px;
+}
+
+.sns-container h3{
+    text-align: center;
+}
+
+.sns-container ul{
+    margin: 0 auto;
+    width: 150px;
+}
+.sns-container li{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    float: left;
+    background: #f1f1f1
+}
+.sns-container li a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: 25px;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.sns-container li a.sns-weibo:hover{
+    background: #49be38;
+    color: #fff;
+}
+.sns-container li a.sns-qq:hover{
+    background: #f57e42;
+    color: #fff;
+}
+.sns-container li a.sns-github:hover{ 
+    background: aqua;
+    color: #fff;
+}

@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "data": {
+        "__v": 0,
+        "nickname": "dddd",
+        "email": "tong@11.com",
+        "hashedPassword": "J/Z3E0+tim/L3s7z/TS/IxG287IxiqrO1lghqnX6dzvOnt9gmx32342MHNmtQ9sTx9Y2WMehreyvKb0lOsqxtw==",
+        "salt": "QKup/BHP0sa2uBC88x603g==",
+        "_id": "57f4fc35d0c522d021f61389",
+        "updated": "2016-10-05T13:12:21.013Z",
+        "created": "2016-10-05T13:12:21.013Z",
+        "status": 1,
+        "role": "user",
+        "likeList": [],
+        "provider": "local",
+        "icon": "http://7xqlce.com1.z0.glb.clouddn.com/blog/article/icon_7.jpg",
+        "phone": 18392019700
+    }
+}

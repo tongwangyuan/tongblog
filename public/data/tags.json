@@ -1,0 +1,24 @@
+{
+    "data": [{
+        "_id": "57dba413ee6c5a380581d1f6",
+        "name": "最新",
+        "__v": 0,
+        "sort": 1,
+        "is_show": false,
+        "is_index": false
+    }, {
+        "_id": "57dba42eee6c5a380581d1f8",
+        "name": "life",
+        "__v": 0,
+        "sort": 1,
+        "is_show": false,
+        "is_index": false
+    }, {
+        "_id": "57dbac59163622400d87b6df",
+        "name": "热门",
+        "__v": 0,
+        "sort": 1,
+        "is_show": false,
+        "is_index": false
+    }]
+}

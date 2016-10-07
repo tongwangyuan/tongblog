@@ -1,0 +1,11 @@
+<div class="reply">
+    <div class="reply-content clearfix">
+        <span class="reply-name commentUserName pull-left" ng-bind="replyItem.user_info.nickname"></span>
+        <p class="" ng-bind="replyItem.content"></p>   
+    </div>
+    <div class="reply-other clearfix">
+        <span class="reply-time pull-left" ng-bind="replyItem.created | customTime"></span>
+        <i class="fa fa-trash pull-right" ng-show="blogscope.ngShowAdmin" ng-click="delReply(comment._id,replyItem._id)" title="删除回复"></i>
+        <i class="fa fa-reply pull-right" title="回复" ng-click="reply(comment.index,replyItem.user_info.nickname)"></i>
+    </div>
+</div>

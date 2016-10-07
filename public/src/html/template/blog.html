@@ -1,0 +1,39 @@
+<div class="blogContent w900">
+    <div class="blog-title">
+        <h2 ng-bind="blog.title"></h2>
+        <div class="">
+            <span class="blog-time" >时间：<span ng-bind="blog.publish_time | customTime"></span></span>
+            <span class="blog-read" >阅读：<span ng-bind="blog.visit_count"></span></span>
+            <span class="blog-comments" >评论：<span ng-bind="blog.comment_count"></span></span>
+        </div>
+    </div>
+    <div class="content markdown haroopad" ng-bind-html="blog.content"></div>
+
+    <!--赞-->
+
+    <div class="support clearfix">
+        <span class="pull-right" ng-show="false"><i class="fa fa-pencil" title="评论"></i><span ng-bind="blog.comment"></span></span>
+        <span class="pull-right"><i class="fa fa-heart" ng-class="{'fa-heart':isliked,'fa-heart-o':!isliked}" ng-click="toliked()" title="赞"></i><span ng-bind="blog.like_count"></span></span>
+    </div>
+    
+    <!--上下篇-->
+    
+    <div class="up-and-down">
+        <div ng-show="blogscope.preShow"><a href="" ui-sref="blog({cid:blogscope.preNext.prev._id})"><span>上一篇：</span><span ng-bind="blogscope.preNext.prev.title"></span></a></div>
+        <div ng-show="blogscope.nextShow"><a href="" ui-sref="blog({cid:blogscope.preNext.next._id})"><span>下一篇：</span><span ng-bind="blogscope.preNext.next.title"></span></a></div>
+    </div>
+
+    <!--评论-->
+    <comment ng-repeat="comment in comments track by $index"></comment>
+    
+    <!--判断是否登录-->
+    <div ng-show="blogscope.ngShowLoginBtn">
+        <a class="btn btn-md btnThis mg10" ui-sref="login" ng-bind="blogscope.I18N.loginToComment"></a>
+    </div> 
+    
+    <!--评论框-->
+    <div class="commentArea" ng-show="!blogscope.ngShowLoginBtn">
+        <textarea name="commentArea" id="commentArea" cols="30" rows="10" ng-model="blogscope.commentCont"></textarea>
+        <button class="btn btn-md cmBtn" ng-click="sendBlogComment()">评论</button>
+    </div>
+</div>

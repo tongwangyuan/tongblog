@@ -1,0 +1,41 @@
+<div>
+    <!--tags-->
+    <div class="tags w900">
+        <ul class="clearfix">
+            <li ng-repeat="tag in tags" repeat-start ng-click="tagClick(tag.name,$index,tag._id)">
+                <a href="" ng-bind="tag.name" data-name="{{tag.name}}"></a>
+            </li>
+        </ul>    
+    </div>
+    <!--bloglist-->
+    <div class="blog-list w900">
+        <ul>
+            <li class="clearfix blog-item" ng-repeat="item in list">
+                <a href="" class="preImg">
+                    <img class="" ng-src="{{item.images[0]}}" alt="{{item.title}}">
+                </a>
+                <div class="preTitle">
+                    <div>
+                        <span ng-bind="item.publish_time | customTime" class="time"></span>
+                    </div>
+                    <div>
+                        <a ui-sref="blog({'cid':item._id})" class="title"><h3  ng-bind="item.title"></h3></a>
+                    </div>
+                    <div class="dataDiv">
+                        <span class="read">
+                        <i class="fa fa-eye"></i>
+                        <span ng-bind="item.visit_count"></span>
+                        </span>
+                        <span class="precomment">
+                    <i class="fa fa-comments"></i><span ng-bind="item.comment_count"></span>
+                        </span>
+                        <span class="like">
+                    <!--<i class="icon-heart-empty"></i>-->
+                    <i class="fa fa-heart"></i><span ng-bind="item.like_count"></span>
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

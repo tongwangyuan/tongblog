@@ -1,0 +1,27 @@
+<div class="comment">
+    <div class="">
+        <div class="comment-info">
+            <span class="icon"><img ng-src="{{comment.user_id.icon}}" alt="{{comment.user_id.nickname}}" title="{{comment.user_id.nickname}}"></span>
+            <div class="other">
+                <div>
+                    <span ng-bind="comment.user_id.nickname" class="commentUserName"></span>评论于：
+                    <span class="comment-time" ng-bind='comment.created | customTime'></span>
+                    <span class="remove-comment" ng-show="blogscope.ngShowAdmin" ng-click="delComment(comment._id,$index)"><i class="fa fa-trash"></i></span>
+                </div>
+                <div><span class="comment-other"></span></div>
+            </div>
+        </div>
+        <div class="content">
+            <p ng-bind='comment.content'></p>
+        </div>
+        <div class="rpBtn clearfix">
+            <span class="" ng-click="reply(comment._id,comment.user_id.nickname)"><i class="fa fa-reply" title="回复"></i></span>
+        </div>
+    </div>
+    <reply ng-repeat="replyItem in comment.replys track by $index"></reply>
+    <div class="form-reply" ng-show="textareaShow">
+        <textarea name="" id="" cols="30" rows="10" ng-blur="blur($event)" ng-model="vals"></textarea>
+        <i class="fa fa-pencil-square-o btn-i-reply" title="提交" ng-click="replyContent(comment._id)"></i>
+    </div>
+    <!--回复内容-->
+</div>

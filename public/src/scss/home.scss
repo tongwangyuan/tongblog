@@ -1,0 +1,225 @@
+$bodyBgColor:#fff;
+$bodyBgColorNight:#3f3f3f;
+$basefontColor:aquamarine;
+$basefontColorNight:#999;
+
+/*------tag----------*/
+
+$tagBg:#fff;
+$tagBgActive:aquamarine;
+$tagBgNight:#2f2f2f;
+$tagBgActiveNight:#000;
+$tagColor:aquamarine;
+$tagColorActive:#fff;
+$tagColorNight:#999;
+
+/*-------------blog--------*/
+
+$blogColor:#000;
+$blogColorNight:$basefontColorNight;
+
+/*-----hardoop----*/
+
+$hardoopColor:#222;
+$hardoopColorNight:$basefontColorNight;
+$hardoopBg:#fff;
+$hardoopBgNight:$bodyBgColorNight;
+body,
+a {
+    color: $basefontColor;
+}
+body {
+    padding-bottom: 25px;
+    min-height: 700px;
+    position: relative;
+}
+textarea {
+    resize: none;
+}
+
+/*------mixin-------------*/
+
+@mixin navStyle($fontcolor, $bgColor) {
+    header.head {
+        /*height: 60px;*/
+        min-height: 60px;
+        line-height: 60px;
+        color: $fontcolor;
+        padding: 0 15px;
+        font-size: 22px;
+        font-weight: 900;
+        border-bottom: 1px solid $fontcolor;
+        a {
+            color: inherit;
+        }
+        span.sign {
+            font-size: 18px;
+        }
+        span.menu {
+            display: inline-block;
+            float: right;
+            i {
+                cursor: pointer
+            }
+        }
+        span.headIcon {
+            display: inline-block;
+            float: right;
+            margin: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            line-height: 0;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+/*-----tags--------*/
+
+@mixin tagStyle($bgColor, $color, $activeBg) {
+    .tags {
+        margin: 5px auto;
+        li {
+            float: left;
+            display: inline-block;
+            border: 1px solid $color;
+            border-radius: 3px;
+            margin: 5px 15px;
+            padding: 5px 15px;
+            background: $bgColor;
+            color: $color;
+            &:hover {
+                color: #fff;
+                background: $activeBg;
+            }
+            a {
+                color: inherit;
+            }
+        }
+        li.active {
+            color: #fff;
+            background: $activeBg;
+        }
+    }
+}
+
+/*----------list-------*/
+
+@mixin blogListStyle($fontcolor, $borderColor) {
+    .blog-list {
+        margin: 5px auto;
+        li.blog-item {
+            margin: 0 0 10px;
+            padding: 5px 0;
+            border-top: 1px solid $borderColor;
+            a.preImg {
+                float: right;
+                img {
+                    border-radius: 5px;
+                    width: 200px;
+                    height: 200px;
+                }
+            }
+            div.preTitle {
+                position: relative;
+                margin: 0 200px 0 0;
+                height: 200px;
+                color: $fontcolor;
+                div.dataDiv {
+                    position: absolute;
+                    bottom: 10px;
+                    font-size: 20px;
+                    i {
+                        margin-right: 15px;
+                        color: $fontcolor;
+                    }
+                }
+                span.time {
+                    font-size: 16px;
+                }
+                a.title {
+                    color: $fontcolor;
+                }
+            }
+        }
+    }
+}
+
+/*----------blog----------------*/
+
+@mixin blogStyle($fontColor, $bgColor) {
+    .blog-title {
+        h2 {
+            text-align: center;
+            color: $fontColor;
+        }
+    }
+    .blogContent {
+        color: $fontColor;
+        .haroopad {
+            color: $fontColor;
+            background: $bgColor;
+        }
+    }
+    .up-and-down {
+        margin: 5px 0;
+    }
+}
+/*-----login-----------*/
+@mixin loginStyle($bg){
+    .loginCon {
+        background: $bg;
+    }
+    .siginCont{
+        background: $bg;
+    }
+}
+
+
+//body
+@mixin containerCon($color, $bg) {
+    background: $bg;
+    color: $color;
+}
+//入口
+.day-style {
+    @include containerCon($basefontColor, $bodyBgColor);
+    @include navStyle($basefontColor, $bodyBgColor);
+    @include tagStyle($tagBg, $tagColor, $tagBgActive);
+    @include blogListStyle($basefontColor, $basefontColor);
+    @include blogStyle($hardoopColor, $hardoopBg);
+    @include loginStyle($bodyBgColor);
+}
+.night-style {
+    @include containerCon($basefontColorNight, $bodyBgColorNight);
+    @include navStyle($basefontColorNight, $bodyBgColorNight);
+    @include tagStyle($tagBgNight, $tagColorNight, $tagBgActiveNight);
+    @include blogListStyle($basefontColorNight, $basefontColorNight);
+    @include blogStyle($hardoopColorNight, $hardoopBgNight);
+    @include loginStyle($bodyBgColorNight);
+}
+//自适应
+@media screen and (min-width:900px) {
+    .w900 {
+        width: 900px;
+        margin: 0 auto;
+    }
+    span.time {
+        font-size: 18px;
+    }
+    .head span.menu {
+        display: inline-block;
+        float: right;
+    }
+    header.head span.sign {
+        font-size: 25px !important;
+    }
+    header.head {
+        padding: 0 50px !important;
+        font-size: 25px !important;
+    }
+}

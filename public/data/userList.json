@@ -1,0 +1,90 @@
+{
+    "data": [{
+        "_id": "57d6a0eea523054017ff1443",
+        "nickname": "tongtong",
+        "email": "tongwangyuan@163.com",
+        "hashedPassword": "mKioB9WLUQe3NrDpYW0+gImpRWh3vozKEnRu4nDWcH0rRdKK9TQkcKkGb0CWF6b+oqD5ZRONV72QEImdspTQsw==",
+        "salt": "AcBi2H082xvL+AV2N0E4sg==",
+        "__v": 0,
+        "updated": "2016-09-12T12:34:54.161Z",
+        "created": "2016-09-12T12:34:54.161Z",
+        "status": 1,
+        "role": "admin",
+        "likeList": ["57dd380735f1e2f410a2d47b", "57ee5a51b78cbbc41fdf1fa6"],
+        "provider": "local",
+        "icon": "http://7xqlce.com1.z0.glb.clouddn.com/blog/article/icon_7.jpg",
+        "phone": 18397000000
+    }, {
+        "_id": "57f1d7827460cb881ab62747",
+        "nickname": "loveyy",
+        "email": "wang@163.com",
+        "hashedPassword": "n/Mrbk0YfhDb17dQ3/TGEki45DHS0ZUU5cnQaIClpzlAcyLdiPbfbJeWaNCvCBRNiyUc88WYMKaS0Owfw5Kk1A==",
+        "salt": "9izKoovCF0g4VTHcOARSEQ==",
+        "__v": 0,
+        "updated": "2016-10-03T03:58:58.991Z",
+        "created": "2016-10-03T03:58:58.990Z",
+        "status": 1,
+        "role": "user",
+        "likeList": ["57dd3881f228b9541e830c8a", "57ee5a51b78cbbc41fdf1fa6"],
+        "provider": "local",
+        "icon": "http://7xqlce.com1.z0.glb.clouddn.com/blog/article/icon_7.jpg",
+        "phone": 18392019700
+    }, {
+        "_id": "57f3994299b110800fcbecd1",
+        "nickname": "依然乌托邦88",
+        "avatar": "http://tva4.sinaimg.cn/crop.0.0.180.180.180/686452d7jw1e8qgp5bmzyj2050050aa8.jpg",
+        "__v": 0,
+        "updated": "2016-10-04T11:57:54.226Z",
+        "created": "2016-10-04T11:57:54.226Z",
+        "status": 1,
+        "role": "user",
+        "likeList": [],
+        "weibo": {
+            "id": "1751405271",
+            "name": "依然乌托邦88",
+            "token": "2.00HWiWuB0TFKuH81bffc2fdceqYo6C"
+        },
+        "provider": "weibo",
+        "icon": "http://tva4.sinaimg.cn/crop.0.0.180.180.180/686452d7jw1e8qgp5bmzyj2050050aa8.jpg",
+        "phone": 18899990000
+    }, {
+        "_id": "57f3a102f36a6c84199db13b",
+        "nickname": "  简单",
+        "avatar": "http://q.qlogo.cn/qqapp/101287997/AC73F833C1AD7F690C63E0EAB99D36D2/100",
+        "__v": 0,
+        "updated": "2016-10-04T12:30:58.368Z",
+        "created": "2016-10-04T12:30:58.368Z",
+        "status": 1,
+        "role": "user",
+        "likeList": ["57ee5a51b78cbbc41fdf1fa6"],
+        "qq": {
+            "id": "AC73F833C1AD7F690C63E0EAB99D36D2",
+            "token": "76CC6FA4266FE786C46F70879AD85329",
+            "name": "  简单",
+            "email": ""
+        },
+        "provider": "qq",
+        "icon": "http://q.qlogo.cn/qqapp/101287997/AC73F833C1AD7F690C63E0EAB99D36D2/100",
+        "phone": 18899990000
+    }, {
+        "_id": "57f3a9110eea15941776efcb",
+        "nickname": "同王园",
+        "avatar": "https://avatars.githubusercontent.com/u/13865804?v=3",
+        "__v": 0,
+        "updated": "2016-10-04T13:05:21.779Z",
+        "created": "2016-10-04T13:05:21.779Z",
+        "status": 1,
+        "role": "user",
+        "likeList": ["57ee5a51b78cbbc41fdf1fa6"],
+        "github": {
+            "id": "13865804",
+            "name": "同王园",
+            "email": "tongwangyuan@163.com",
+            "token": "c599f79b2c7594cd560f3f875cedbfd793f8a5de"
+        },
+        "provider": "github",
+        "icon": "https://avatars.githubusercontent.com/u/13865804?v=3",
+        "phone": 18899990000
+    }],
+    "count": 5
+}

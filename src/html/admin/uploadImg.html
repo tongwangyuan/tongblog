@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title" ng-bind="modalTitle"></h3>
+</div>
+<div class="modal-body">
+     <button class="btn btnFile btnThis" ngf-select ng-modal="file" name="file" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="2MB" ng-click="uploadImg($file)">选择文件</button>
+</div>
+<div class="modal-footer">
+    <button class="btn btnThis" type="button" ng-show="okBtnShow" ng-click="ok()">OK</button>
+    <button class="btn btnThis" type="button" ng-show="cancelBtnShow" ng-click="cancel()">Cancel</button>
+</div>

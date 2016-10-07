@@ -1,0 +1,39 @@
+<div ng-controller="blogCtrl" class="blogContent w900">
+    <div class="blog-title">
+        <h2 ng-bind="blog.title"></h2>
+        <div class="">
+            <span class="blog-time" >时间：<span ng-bind="blog.time"></span></span>
+            <span class="blog-read" >阅读：<span ng-bind="blog.read"></span></span>
+            <span class="blog-comments" >评论：<span ng-bind="blog.comment"></span></span>
+        </div>
+    </div>
+    <div class="content" ng-bind-html="blog.content"></div>
+
+    <!--赞-->
+
+    <div class="support clearfix">
+        <span class="pull-right"><i class="fa fa-pencil" title="评论"></i><span ng-bind="blog.comment"></span></span>
+        <span class="pull-right"><i class="fa fa-heart" ng-class="{'fa-heart':isliked,'fa-heart-o':!isliked}" ng-click="toliked()" title="赞"></i><span ng-bind="blog.like"></span></span>
+    </div>
+    
+    <!--上下篇-->
+    
+    <div class="up-and-down">
+        <div><a href="" ui-sref="blog({cid:3})"><span>上一篇：</span><span>好喜欢中二少女</span></a></div>
+        <div><a href="" ui-sref="blog({cid:4})"><span>下一篇：</span><span>讨厌中二少女</span></a></div>
+    </div>
+
+    <!--评论-->
+    <comment ng-repeat="comment in comments track by $index"></comment>
+    
+    <!--判断是否登录-->
+    <div ng-show="blogList.ngShowLoginBtn">
+        <a class="btn btn-lg btnThis" ui-sref="login" ng-bind="blogList.I18N.loginToComment"></a>
+    </div>
+    
+    <!--评论框-->
+    <div class="commentArea" ng-show="!blogList.ngShowLoginBtn">
+        <textarea name="commentArea" id="commentArea" cols="30" rows="10"></textarea>
+        <button class="btn btn-md cmBtn" ng-click="sendBlogComment()">评论</button>
+    </div>
+</div>

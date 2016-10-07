@@ -1,0 +1,15 @@
+<div class="panel">
+    <div class="panel-body">
+        <h2>管理标签-列表-双击删除</h2>
+        <div class="taglists">
+            <ul class="tags">
+                <li  class="active" ng-click="addTag()">
+                    <a href="" ><i class="fa fa-plus-square"></i></a>
+                </li>
+                <li ng-repeat="tag in manageTag.lists"  ng-dblclick="delTag(tag,$index)" class="ng-scope active">
+                    <a href="" ng-bind="tag" data-name="tag.name"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="panel siginCont">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <label for="nickName" ng-bind="siginScope.I18N.nikeName"></label>
+                    <input type="text" id="nickName" class="form-control" ng-model="siginScope.siginNickName" ng-class="{error:!siginScope.checkName}">
+                </div>
+                <div class="form-group">
+                    <label for="siginPassword" ng-bind="siginScope.I18N.password"></label>
+                    <input type="password" id="siginPassword" class="form-control" ng-model="siginScope.siginPassword" ng-class="{error:!siginScope.checkPassword}">
+                </div>
+                <div class="form-group">
+                    <label for="siginEmail" ng-bind="siginScope.I18N.email"></label>
+                    <input type="text" id="siginEmail" class="form-control" ng-model="siginScope.siginEmail" ng-class="{error:!siginScope.checkEmail}">
+                </div>
+                <div class="form-group">
+                    <label for="phone" ng-bind="siginScope.I18N.phone"></label>
+                    <input type="text" id="phone" class="form-control" ng-model="siginScope.siginPhone" ng-class="{error:!siginScope.checkPhone}">
+                </div>
+                <!--<div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                            <label for="authCode" ng-bind="loginScope.I18N.authCode"></label>
+                            <input type="text" class="form-control" id="authCode" ng-model="loginScope.authCode">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <label for="authCode" ng-bind="loginScope.I18N.clickRefresh"></label>
+                        <div class="form-group" ng-click="changeCode()">
+                            <img src="" alt="验证码" class="authCodeSrc" ng-src='{{authCodeSrc}}'>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="sigin">
+                    <button class="btn btnThis" ng-bind="siginScope.I18N.sigin" ng-click="sigin()"></button>
+                </div>
+                <div class="thirdParty">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
