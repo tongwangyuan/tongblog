@@ -51,13 +51,13 @@ var ArticleSchema = new Schema({
 	},
 	publish_time: {
 		type: Date,
-		default: Date.now
+		default: new Date("2016-08-18 21:21:12")
 	},
-  updated: {
+  updated: {  
     type: Date,
     default: Date.now
   }
-});
+});  
 
 ArticleSchema
   .virtual('info')

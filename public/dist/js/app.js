@@ -127,7 +127,7 @@ appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $locat
     };
 });
 
-appService.value("env", "development") //development,production,test
+appService.value("env", "production") //development,production,test
     .factory("http", ["$http", "$q", "env", function ($http, $q, env) {
         function go(d) {
             var deferred = $q.defer();

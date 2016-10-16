@@ -24,7 +24,7 @@ exports.addBlog = function(req,res,next){
         res.status(422).send({err_message:err_msg});
     }
     //Article.
-    
+    console.log(req.body);
     return Article.createAsync(req.body).then(function (result) {
 		return res.status(200).json({success: true,article_id:result._id});
 	}).catch(function (err) {

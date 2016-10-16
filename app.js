@@ -1,14 +1,14 @@
 'use strict';
 
 // 设置默认环境变量
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';//production;development
 var express = require('express');
 var http = require("http");
 var path = require("path");
 var mongoose = require("mongoose");
 var fs = require("fs");
 var config = require("./server/config/env");
-//ngoose.connect('mongodb://127.0.0.1:12345/imooc');
+
 mongoose.connect(config.mongo.uri, config.mongo.options);
 
 
@@ -21,6 +21,7 @@ fs.readdirSync(modelsPath).forEach(function (file) {
 //mongoose promise 风格
 mongoose.Promise = global.Promise;
 var app = new express();
+
 app.listen(config.port, function (req, res, next) {
     console.log('server start on ' + config.port);
 })

@@ -3,6 +3,7 @@
 var ccap = require("ccap")();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var logger = require("../../util/log");
 
 
 //得到验证码
@@ -65,6 +66,7 @@ exports.sigin = function (req, res) {
     });
     
     newUser.saveAsync().then(function (user) { 
+        logger.info('sigin user :' +user.nickname+"success");
         return res.status(200).send(user);
     }).catch(function(err){
         if(err.errors && err.errors.nickname){
@@ -108,6 +110,7 @@ exports.delUser = function(req,res,next){
         return res.status(403).send({err_message:'不能删除正在登录用户！'});
     }else{
         User.findByIdAndRemoveAsync(req.query.id).then(function(d){
+            logger.info('del user which id is:' + req.query.id +"success");
             res.status(200).send({flag:true});
         }).catch(function(err){
             res.status(400).send({err_message:'删除用户失败！'});
@@ -151,6 +154,7 @@ exports.addUser = function (req, res) {
     });
     
     newUser.saveAsync().then(function (user) { 
+        logger.info('create user :' +user.nickname+"success");
         return res.status(200).send({success:true,data:user});
     }).catch(function(err){
         if(err.errors && err.errors.nickname){
