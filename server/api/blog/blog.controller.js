@@ -24,7 +24,6 @@ exports.addBlog = function(req,res,next){
         res.status(422).send({err_message:err_msg});
     }
     //Article.
-    console.log(req.body);
     return Article.createAsync(req.body).then(function (result) {
 		return res.status(200).json({success: true,article_id:result._id});
 	}).catch(function (err) {
@@ -36,7 +35,6 @@ exports.addBlog = function(req,res,next){
 exports.getArticle = function (req,res) {
 	//var id = req.params.id;
 	var id = req.query.id;
-    console.log(id);
 	Article.findOne({_id:id})
 		.populate('tags')//如果标签页页要更新的话，通过popution来关联tag文档；
 		.exec().then(function (article) {

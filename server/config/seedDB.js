@@ -21,7 +21,7 @@ var Promise = require('bluebird');
 			 			nickname:'tongtong',
 			 			email:'tongwangyuan@163.com',
 			 			role:'admin',
-			 			password:'tongtong88',
+			 			password:'ss',
                         phone:18397000000,
 			 			status:1
 			 		},{
