@@ -19,7 +19,7 @@ exports.addBlog = function(req,res,next){
     }else if("content" ===content){
         err_msg = '内容不能为空！';
     }
-    
+    req.body.publish_time = new Date(req.body.publish_time);
     if(err_msg){
         res.status(422).send({err_message:err_msg});
     }

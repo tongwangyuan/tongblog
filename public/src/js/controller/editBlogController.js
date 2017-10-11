@@ -96,7 +96,7 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
     //打开图片模态框
     function openUploadModal() {
         var uploadInstance = $modal.open({
-            templateUrl: "src/html/admin/uploadImg.html",
+            templateUrl: "public/src/html/admin/uploadImg.html",
             controller: "uploadImgCtrl"
         });
         uploadInstance.result.then(function () {

@@ -13,7 +13,7 @@ router.post('/', function (req,res,next) {
     var error_msg;
     if(!req.body.captcha){
       error_msg = "验证码不能为空.";
-    }else if(req.session.captcha !== req.body.captcha.toUpperCase()){
+    }else if(req.session.captcha.toString() !== req.body.captcha.toUpperCase()){
       error_msg = "验证码错误.";
     }else if(req.body.email === '' || req.body.password === ''){
       error_msg = "用户名和密码不能为空.";

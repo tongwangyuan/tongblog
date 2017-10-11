@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "webhook",
+            "script": "./config/webhook/webhook.js",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "out_file": "./logs/pm2-webhook-out.log",
+            "error_file": "./logs/pm2-webhook-err.log",
+            "pid_file": "./logs/blog.pid",
+            "ignoreWatch": ["[\\/\\\\]\\./", "node_modules"],
+            "watch": "false",
+            "instances":"1",
+            "exec_mode": "cluster",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}
