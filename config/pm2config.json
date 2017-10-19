@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "blog",
+            "script": "./app.js",
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "out_file": "./logs/pm2-app-out.log",
+            "error_file": "./logs/pm2-app-err.log",
+            "pid_file": "./logs/blog.pid",
+            "ignoreWatch": ["[\\/\\\\]\\./", "node_modules"],
+            "watch": "false",
+            "instances":"max",
+            "exec_mode": "cluster",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}

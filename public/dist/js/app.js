@@ -127,9 +127,9 @@ appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $locat
     };
 });
 
-appService.value("env", "production") //development,production,test
+appService.value("env", "developments") //development,production,test
     .factory("http", ["$http", "$q", "env", function ($http, $q, env) {
-        function go(d) {
+        function go(d) {   
             var deferred = $q.defer();
             var httpGo;
             if ("development" === env) {//方便本地测试请切换请求类型；
@@ -1013,7 +1013,7 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
     //打开图片模态框
     function openUploadModal() {
         var uploadInstance = $modal.open({
-            templateUrl: "src/html/admin/uploadImg.html",
+            templateUrl: "public/src/html/admin/uploadImg.html",
             controller: "uploadImgCtrl"
         });
         uploadInstance.result.then(function () {
@@ -1519,7 +1519,8 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
         blogTit: "",
         blogContent: "",
         imgUrl:"",
-        imgList:[]
+        imgList:[],
+        publish_time:""
     }
     var I18N = {
         serviceError: I18N.serviceError,
@@ -1570,9 +1571,10 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
                 tags: tag,
                 status: type,
                 content: $scope.release.blogContent,
-                images:$scope.release.imgList
-            }
-        }).then(function (d) {
+                images:$scope.release.imgList,
+                publish_time:$scope.release.publish_time
+            }   
+        }).then(function (d) {   
             if (true === d.success) {
                 if (0 === type) {
                     toastr.success("发布草稿成功！", I18N.prompt);

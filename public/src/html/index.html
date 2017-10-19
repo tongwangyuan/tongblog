@@ -12,22 +12,22 @@
 
 <body ng-controller="rootCtrl" ng-class="{'day-style':root.dayStyle,'night-style':!root.dayStyle}">
     <section class="content">
-    <!--nav-->
-    @@include("template/nav.html")
-    
-    <!--tags-->
-    <!--@@include("template/tag.html")-->
-    
-    <!--content-->
-    <!--@@include("template/blogList.html")-->
-    <div ui-view></div>
-    
+        <!--nav-->
+        @@include("template/nav.html")
+
+        <!--tags-->
+        <!--@@include("template/tag.html")-->
+
+        <!--content-->
+        <!--@@include("template/blogList.html")-->
+        <div ui-view></div>
+
+        <!--footer-->
+        @@include("template/footer.html")
+        <gotop></gotop>
+    </section> 
     <!--footer-->
-    @@include("template/footer.html")
-    <gotop></gotop>
-    </section>  
-    <!--footer-->
-    @@include("footer/-commonjs.html")       
-</body>   
+    @@include("footer/-commonjs.html")
+</body>
 
 </html>
