@@ -5,7 +5,7 @@
 module.exports = {
   //开发环境mongodb配置
   mongo: {
-    uri: 'mongodb://tong:tongtong88@localhost:27017/blog',
+    uri: '',
     options:{
         useMongoClient:true
     }
