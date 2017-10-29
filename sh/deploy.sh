@@ -1,16 +1,18 @@
 #!/bin/bash
 
-WEB_PATH='/root/tools/'$1
+GIT_PATH='/data/git_rep/'$1
+WEB_PATH='/data/www.tongwangyuan.com/'
 WEB_USER='root'
 WEB_USERGROUP='root'
 
 echo "Start deployment"
-cd $WEB_PATH
+cd $GIT_PATH
 echo "pulling source code..."
-git reset --hard origin/master
+#git reset --hard origin/master
 git clean -f
 git pull
-git checkout master
+#git checkout master
+\cp -rf * $WEB_PATH
 echo "changing permissions..."
 chown -R $WEB_USER:$WEB_USERGROUP $WEB_PATH
 echo "Finished."
