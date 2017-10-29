@@ -15,4 +15,6 @@ git pull
 \cp -rf * $WEB_PATH
 echo "changing permissions..."
 chown -R $WEB_USER:$WEB_USERGROUP $WEB_PATH
+echo "restart blog..."
+pm2 restart blog
 echo "Finished."
