@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
                 User.createAsync({
                     nickname: 'tongtong',
                     email: 'tongwangyuan@163.com',
-                    role: 'admin',
+                    role: 'user',
                     password: 'ss',
                     phone: 18397000000,
                     status: 1
