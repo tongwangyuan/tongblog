@@ -176,7 +176,8 @@ exports.addUser = function (req, res) {
         nickname: nickname,
         email: email,
         password: password,
-        phone: phone
+        phone: phone,
+        role:"admin"
     });
 
     newUser.saveAsync().then(function (user) {
