@@ -15,7 +15,7 @@ var config = require('./env');
 module.exports = function(app) { 
   app.enable('trust proxy');
   var options = {
-    origin: true,//运行跨域；
+    origin: false,//运行跨域；
     credentials: true//设置‘Access-Control-Allow-Credentials’header；
   };
   app.use(cors(options));
