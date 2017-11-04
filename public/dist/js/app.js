@@ -127,9 +127,9 @@ appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $locat
     };
 });
 
-appService.value("env", "developments") //development,production,test
+appService.value("env", "production") //development,production,test
     .factory("http", ["$http", "$q", "env", function ($http, $q, env) {
-        function go(d) {   
+        function go(d) {
             var deferred = $q.defer();
             var httpGo;
             if ("development" === env) {//方便本地测试请切换请求类型；
@@ -1610,7 +1610,7 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
         loginOrOutTitle: I18N.login,
         sign: I18N.sign,
         ngShowHeaderIcon: false,
-        headerSrc: "http://7xqlce.com1.z0.glb.clouddn.com/blog/article/icon_7.jpg",
+        headerSrc: "https://s.tongwangyuan.com/blog/article/icon_7.jpg",
         dayStyle:true
     }
 

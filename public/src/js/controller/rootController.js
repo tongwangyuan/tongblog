@@ -3,7 +3,7 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
         loginOrOutTitle: I18N.login,
         sign: I18N.sign,
         ngShowHeaderIcon: false,
-        headerSrc: "http://7xqlce.com1.z0.glb.clouddn.com/blog/article/icon_7.jpg",
+        headerSrc: "https://s.tongwangyuan.com/blog/article/icon_7.jpg",
         dayStyle:true
     }
 
