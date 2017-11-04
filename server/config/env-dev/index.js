@@ -32,7 +32,7 @@ var all = {
   qiniu:{
     app_key:'',
     app_secret:'',
-    domain:'http://s.tongwangyuan.com/',          //七牛配置域名
+    domain:'https://s.tongwangyuan.com/',          //七牛配置域名
     bucket:'blog'           //七牛空间名称  
   },
   //默认首页图片.
