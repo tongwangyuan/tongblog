@@ -1,6 +1,4 @@
 'use strict';
-
-//var ccap = require("ccap")();
 var captchapng = require("captchapng");
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
@@ -9,9 +7,6 @@ var logger = require("../../util/log");
 
 //得到验证码
 exports.getAuthCode = function (req, res) {
-    /*  var ary = ccap.get();
-        var txt = ary[0];
-        var buf = ary[1];*/
     var AuthText = parseInt(Math.random() * 9000 + 1000);
     var p = new captchapng(80, 30, AuthText); // width,height,numeric captcha 
     p.color(0, 0, 0, 0); // First color: background (red, green, blue, alpha) 
