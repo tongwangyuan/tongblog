@@ -31,9 +31,9 @@ httpServer.listen(config.port, function (req, res, next) {
     console.log('server start on ' + config.port);
 })
 
-httpsServer.listen(5001, function (req, res, next) {
+/* httpsServer.listen(5001, function (req, res, next) {
     console.log('server start on  https' + 5001);
-})
+}) */  
 
 // 初始化数据
 if(config.seedDB) { require('./server/config/seedDB'); }
