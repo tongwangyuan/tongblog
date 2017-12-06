@@ -1,4 +1,4 @@
-appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", function ($scope, http, I18N, interface) {
+appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interfaces", function ($scope, http, I18N, interfaces) {
     $scope.blogList = {
         I18N: {
 
@@ -9,7 +9,7 @@ appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", funct
     var I18N = {
         serviceError: I18N.serviceError,
         prompt: I18N.prompt,
-    }
+    }  
 
     // When route start changed.
     $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
@@ -23,7 +23,7 @@ appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", funct
     function getBlogList(type) {
         http.go({
             method: "get",
-            url: interface.blogList,
+            url: interfaces.blogList,
             param: {
                 currentPage: $scope.blogList.currentPage,
                 tagId: type
@@ -39,7 +39,7 @@ appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", funct
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
+            url: interfaces.tag,
             param: {
                 
             }

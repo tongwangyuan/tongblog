@@ -1,3 +1,5 @@
+'use strict';
+
 var app = angular.module('tong', ['tong.appCtrl', 'tong.appService', 'tong.appDirect', 'tong.appFilter', 'tong.appResource', 'ngAnimate', 'ngLodash', 'ngTouch', 'ui.bootstrap', 'ui.router', 'ngSanitize', 'ngCookies', 'ngProgress', 'ngFileUpload', 'ngResource']);
 var appCtrl = angular.module('tong.appCtrl', []);
 var appService = angular.module('tong.appService', []);
@@ -73,7 +75,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$logProvider', '$locationPr
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"*/
-    }
+    };
 }]).run(['$rootScope', 'ngProgressFactory', function ($rootScope, ngProgressFactory) {
     $rootScope.progressBar = ngProgressFactory.createInstance();
     // When route start changed.
@@ -92,12 +94,13 @@ app.config(['$stateProvider', '$urlRouterProvider', '$logProvider', '$locationPr
     $rootScope.$on('$stateChangeError', function (ev, toState, toParams, fromState, fromParams) {
         $rootScope.progressBar.reset();
     });
-}])
+}]);
+'use strict';
 
-appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $location, $injector,I18N) {
+appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $location, $injector, I18N) {
     var Auth;
     return {
-        request: function (config) {
+        request: function request(config) {
             config.headers = config.headers || {};
             //local 登录，不涉及sns第三放登录；
             if ($cookies.get('token')) {
@@ -105,13 +108,13 @@ appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $locat
             }
             return config;
         },
-        response: function (response) {
-            if(void 0 === response){
+        response: function response(_response) {
+            if (void 0 === _response) {
                 toastr.warning('您请求的东东异常~~，请私我马上处理', I18N.prompt);
             }
-            return response;
+            return _response;
         },
-        responseError: function (rejection) {
+        responseError: function responseError(rejection) {
             if (rejection.data && rejection.data.error_msg) {
                 toastr.error(rejection.data.error_msg, I18N.prompt);
             }
@@ -126,283 +129,277 @@ appService.factory('AuthInterceptor', function ($rootScope, $q, $cookies, $locat
         }
     };
 });
+"use strict";
 
 appService.value("env", "production") //development,production,test
-    .factory("http", ["$http", "$q", "env", function ($http, $q, env) {
-        function go(d) {
-            var deferred = $q.defer();
-            var httpGo;
-            if ("development" === env) {//方便本地测试请切换请求类型；
-                /*if ("post" === d.method) {
-                    httpGo = $http.post(d.url, d.param);
-                } else if ("get" === d.method) {
-                    httpGo = $http.get(d.url, angular.extend({}, {
-                        params: d.param
-                    }))
-                } else if ("delete" === d.method) {
-                    httpGo = $http["delete"](d.url, angular.extend({}, {
-                        params: d.param
-                    }));
-                }else if("put" === d.method){
-                    httpGo = $http.put(d.url, d.param);
-                }*/
+.factory("http", ["$http", "$q", "env", function ($http, $q, env) {
+    function go(d) {
+        var deferred = $q.defer();
+        var httpGo;
+        if ("development" === env) {
+            //方便本地测试请切换请求类型；
+            /*if ("post" === d.method) {
+                httpGo = $http.post(d.url, d.param);
+            } else if ("get" === d.method) {
                 httpGo = $http.get(d.url, angular.extend({}, {
                     params: d.param
                 }))
-            } else {
-                if ("post" === d.method) {
-                    httpGo = $http.post(d.url, d.param);
-                } else if ("put" === d.method) {
-                    httpGo = $http.put(d.url, d.param);
-                } else if ("delete" === d.method) {
-                    httpGo = $http["delete"](d.url, angular.extend({}, {
-                        params: d.param
-                    }));
-                } else if ("get" === d.method) {
-                    httpGo = $http.get(d.url, angular.extend({}, {
-                        params: d.param
-                    }));
-                }
+            } else if ("delete" === d.method) {
+                httpGo = $http["delete"](d.url, angular.extend({}, {
+                    params: d.param
+                }));
+            }else if("put" === d.method){
+                httpGo = $http.put(d.url, d.param);
+            }*/
+            httpGo = $http.get(d.url, angular.extend({}, {
+                params: d.param
+            }));
+        } else {
+            if ("post" === d.method) {
+                httpGo = $http.post(d.url, d.param);
+            } else if ("put" === d.method) {
+                httpGo = $http.put(d.url, d.param);
+            } else if ("delete" === d.method) {
+                httpGo = $http["delete"](d.url, angular.extend({}, {
+                    params: d.param
+                }));
+            } else if ("get" === d.method) {
+                httpGo = $http.get(d.url, angular.extend({}, {
+                    params: d.param
+                }));
             }
-            httpGo.success(function (d) {
-                deferred.resolve(d);
-            }).error(function (d) {
-                deferred.reject(d);
-            })
+        }
+        httpGo.success(function (d) {
+            deferred.resolve(d);
+        }).error(function (d) {
+            deferred.reject(d);
+        });
+        return deferred.promise;
+    }
+    return {
+        go: go
+    };
+}]).factory('interfaces', ["env", function (env) {
+
+    var developUrl = {
+        tag: "public/data/tags.json", //标签    
+        blog: "public/data/blog.json", //博客内容
+        getArticle: "public/data/getArticle.json", //后台博客内容
+        getPreNext: "public/data/getPreNext.json", //获得上下篇
+        blogList: "public/data/blogList.json", //博客列表   
+        getEndBlogList: "public/data/getEndBlogList.json", //博客列表   
+        blogComment: "public/data/comment.json", //博客评论   
+        isLogin: "public/data/isLogin.json", //判断是否登录   
+        loginOut: "public/data/loginOut.json", //退出登录   
+        addComment: "public/data/sendComment.json", //发送评论
+        delComment: "public/data/delComment.json", //删除评论
+        addReply: "public/data/addReply.json", //回复
+        delReply: "public/data/delReply.json", //删除回复
+        toggleLike: "public/data/toLike.json", //去喜欢   
+        getUserInfo: "public/data/getUserInfo.json", //得到用户信息
+        uploadImg: "public/data/uploadImg.json", //上傳文件
+        releaseBlog: "public/data/releaseBlog.json", //发布博客
+        updateBlog: "public/data/releaseBlog.json", //更新博客
+        delBlog: "public/data/delBlog.json", //删除博客
+        delTag: "public/data/delTag.json", //删除标签
+        addTag: "public/data/addTag.json", //增加标签
+        userList: "public/data/userList.json", //用户列表
+        authCode: "public/data/authCode.json", //验证码
+        login: "public/data/login.json", //登录
+        sigin: "public/data/sigin.json", //注册
+        getme: "public/data/getme.json", //得到用户信息
+        delUser: "public/data/delUser.json", //删除用户
+        addUser: "public/data/addUser.json" //增加用户
+    };
+
+    var produceUrl = {
+        tag: "/api/tags/getTagList",
+        blog: "/api/blog/getBlog",
+        getArticle: "/api/blog/getArticle",
+        getPreNext: "/api/blog/getPreNext",
+        blogList: "/api/blog/getBlogList",
+        getEndBlogList: "/api/blog/getEndBlogList", //后台博客列表   
+        blogComment: "/api/comment/getCommentList",
+        isLogin: "",
+        loginOut: "",
+        addComment: "/api/comment/addComment",
+        delComment: "/api/comment/delComment",
+        addReply: "/api/comment/addReply",
+        delReply: "/api/comment/delReply",
+        toggleLike: "/api/blog/toggleLike",
+        getUserInfo: "",
+        uploadImg: "/api/blog/uploadImg",
+        releaseBlog: "/api/blog/addBlog",
+        updateBlog: "/api/blog/updateBlog",
+        delBlog: "/api/blog/delBlog",
+        delTag: "/api/tags/delTag",
+        addTag: "/api/tags/addTag",
+        userList: "/api/users/userlist",
+        authCode: "/api/users/getAuthCode",
+        login: "/auth/local",
+        sigin: "/api/auth/sigin",
+        getme: "/api/users/me",
+        delUser: "/api/users/delUser",
+        addUser: "/api/users/addUser"
+    };
+
+    if ("development" === env) {
+        return developUrl;
+    } else {
+        return produceUrl;
+    }
+}]).factory('Auther', ['$cookies', '$http', '$q', '$state', 'env', 'interfaces', 'I18N', "$timeout", "User", 'lodash', '$window', function ($cookies, $http, $q, $state, env, interfaces, I18N, $timeout, User, lodash, $window) {
+    var currentUser = {};
+    if ($cookies.get('token')) {
+        currentUser = User.get();
+    }
+
+    function login(user, callback) {
+        var cb = callback || angular.noop;
+        var deferred = $q.defer();
+        //为什么是post；passport-local验证字段使用req.body来取值得
+        if ('development' !== env) {
+            $http.post(interfaces.login, {
+                //email: user.email,
+                nickname: user.nickname,
+                password: user.password,
+                captcha: user.captcha
+            }).success(function (data) {
+                $cookies.put('token', data.token);
+                currentUser = User.get();
+                deferred.resolve(data);
+                return cb();
+            }).error(function (err) {
+                this.loginOut();
+                deferred.reject(err);
+                return cb(err);
+            }.bind(this));
+
+            return deferred.promise;
+        } else {
+            $http.get(interfaces.login, {
+                //email: user.email,
+                nickname: user.nickname,
+                password: user.password,
+                captcha: user.captcha
+            }).success(function (data) {
+                $cookies.put('token', data.token);
+                currentUser = User.get();
+                deferred.resolve(data);
+                return cb();
+            }).error(function (err) {
+                this.loginOut();
+                deferred.reject(err);
+                return cb(err);
+            }.bind(this));
             return deferred.promise;
         }
-        return {
-            go: go
-        }
-}])
-    .factory('interface', ["env", function (env) {
+    }
 
-        var developUrl = {
-            tag: "public/data/tags.json", //标签    
-            blog: "public/data/blog.json", //博客内容
-            getArticle: "public/data/getArticle.json", //后台博客内容
-            getPreNext: "public/data/getPreNext.json", //获得上下篇
-            blogList: "public/data/blogList.json", //博客列表   
-            getEndBlogList: "public/data/getEndBlogList.json", //博客列表   
-            blogComment: "public/data/comment.json", //博客评论   
-            isLogin: "public/data/isLogin.json", //判断是否登录   
-            loginOut: "public/data/loginOut.json", //退出登录   
-            addComment: "public/data/sendComment.json", //发送评论
-            delComment: "public/data/delComment.json", //删除评论
-            addReply: "public/data/addReply.json", //回复
-            delReply: "public/data/delReply.json", //删除回复
-            toggleLike: "public/data/toLike.json", //去喜欢   
-            getUserInfo: "public/data/getUserInfo.json", //得到用户信息
-            uploadImg: "public/data/uploadImg.json", //上傳文件
-            releaseBlog: "public/data/releaseBlog.json", //发布博客
-            updateBlog: "public/data/releaseBlog.json", //更新博客
-            delBlog: "public/data/delBlog.json", //删除博客
-            delTag: "public/data/delTag.json", //删除标签
-            addTag: "public/data/addTag.json", //增加标签
-            userList: "public/data/userList.json", //用户列表
-            authCode: "public/data/authCode.json", //验证码
-            login: "public/data/login.json", //登录
-            sigin: "public/data/sigin.json", //注册
-            getme: "public/data/getme.json", //得到用户信息
-            delUser: "public/data/delUser.json", //删除用户
-            addUser: "public/data/addUser.json", //增加用户
-        };
+    function isLogin() {
+        return currentUser.hasOwnProperty('role');
+    }
 
-        var produceUrl = {
-            tag: "/api/tags/getTagList",
-            blog: "/api/blog/getBlog",
-            getArticle: "/api/blog/getArticle",
-            getPreNext: "/api/blog/getPreNext",
-            blogList: "/api/blog/getBlogList",
-            getEndBlogList: "/api/blog/getEndBlogList", //后台博客列表   
-            blogComment: "/api/comment/getCommentList",
-            isLogin: "",
-            loginOut: "",
-            addComment: "/api/comment/addComment",
-            delComment: "/api/comment/delComment",
-            addReply: "/api/comment/addReply",
-            delReply: "/api/comment/delReply",
-            toggleLike: "/api/blog/toggleLike",
-            getUserInfo: "",
-            uploadImg: "/api/blog/uploadImg",
-            releaseBlog: "/api/blog/addBlog",
-            updateBlog: "/api/blog/updateBlog",
-            delBlog: "/api/blog/delBlog",
-            delTag: "/api/tags/delTag",
-            addTag: "/api/tags/addTag",
-            userList: "/api/users/userlist",
-            authCode: "/api/users/getAuthCode",
-            login: "/auth/local",
-            sigin: "/api/auth/sigin",
-            getme: "/api/users/me",
-            delUser: "/api/users/delUser",
-            addUser: "/api/users/addUser",
-        };
-
-        if ("development" === env) {
-            return developUrl;
-        } else {
-            return produceUrl
-        }
-}])
-    .factory('Auther', ['$cookies', '$http', '$q', '$state', 'env', 'interface', 'I18N', "$timeout", "User", 'lodash', '$window', function ($cookies, $http, $q, $state, env, interface, I18N, $timeout, User, lodash, $window) {
-        var currentUser = {};
-        if ($cookies.get('token')) {
-            currentUser = User.get();
-        }
-
-        function login(user, callback) {
-            var cb = callback || angular.noop;
-            var deferred = $q.defer();
-            //为什么是post；passport-local验证字段使用req.body来取值得
-            if ('development' !== env) {
-                $http.post(interface.login, {
-                    //email: user.email,
-                    nickname: user.nickname,
-                    password: user.password,
-                    captcha: user.captcha
-                }).
-                success(function (data) {
-                    $cookies.put('token', data.token);
-                    currentUser = User.get();
-                    deferred.resolve(data);
-                    return cb();
-                }).
-                error(function (err) {
-                    this.loginOut();
-                    deferred.reject(err);
-                    return cb(err);
-                }.bind(this));
-
-                return deferred.promise;
-            } else {
-                $http.get(interface.login, {
-                    //email: user.email,
-                    nickname: user.nickname,
-                    password: user.password,
-                    captcha: user.captcha
-                }).
-                success(function (data) {
-                    $cookies.put('token', data.token);
-                    currentUser = User.get();
-                    deferred.resolve(data);
-                    return cb();
-                }).
-                error(function (err) {
-                    this.loginOut();
-                    deferred.reject(err);
-                    return cb(err);
-                }.bind(this));
-                return deferred.promise;
-            }
-        }
-
-        function isLogin() {
-            return currentUser.hasOwnProperty('role');
-        }
-
-        function isLoginAsync(cb) {
-            if (currentUser.hasOwnProperty('$promise')) {
-                currentUser.$promise.then(function () {
-                    cb(true);
-                }).catch(function () {
-                    cb(false);
-                })
-            } else if (currentUser.hasOwnProperty('role')) {
+    function isLoginAsync(cb) {
+        if (currentUser.hasOwnProperty('$promise')) {
+            currentUser.$promise.then(function () {
                 cb(true);
-            } else {
+            }).catch(function () {
                 cb(false);
-            }
-        }
-
-        function loginOut() {
-            $cookies.remove('token');
-            currentUser = {};
-            $state.go('home', null, {
-                reload: true
             });
+        } else if (currentUser.hasOwnProperty('role')) {
+            cb(true);
+        } else {
+            cb(false);
         }
+    }
 
-        function isAdmin() {
-            return currentUser.role === 'admin';
+    function loginOut() {
+        $cookies.remove('token');
+        currentUser = {};
+        $state.go('home', null, {
+            reload: true
+        });
+    }
+
+    function isAdmin() {
+        return currentUser.role === 'admin';
+    }
+
+    function isLike(aid) {
+        //返回符合条件的索引值
+        var index = lodash.findIndex(currentUser.likes, function (item) {
+            return item.toString() === aid;
+        });
+        return index !== -1 ? true : false;
+    }
+
+    function snsLogin(provider, redirectUrl) {
+
+        var search = '/auth/' + provider + '?redirectUrl=' + (redirectUrl || '/');
+        if ($cookies.get('token')) {
+            search += '&access_token=' + $cookies.get('token').replace(/(^\")|(\"$)/g, "");
         }
+        $window.location.href = search;
+    }
 
-        function isLike(aid) {
-            //返回符合条件的索引值
-            var index = lodash.findIndex(currentUser.likes, function (item) {
-                return item.toString() === aid;
-            });
-            return (index !== -1) ? true : false;
+    return {
+        isLogin: isLogin,
+        login: login,
+        loginOut: loginOut,
+        isAdmin: isAdmin,
+        isLoginAsync: isLoginAsync,
+        isLike: isLike,
+        currentUser: currentUser,
+        snsLogin: snsLogin
+    };
+}]).factory('ModalFactory', ['$modal', function ($modal) {
+
+    function openModal(controller, size) {
+        var openModalInstanse = $modal.open({
+            templateUrl: 'public/src/html/template/modal.html',
+            controller: controller,
+            size: size
+        });
+        openModalInstanse.result.then(function () {
+            //console.log('模态框展示成功');
+        }, function () {
+            //console.log('模态框展示失败');
+        });
+    }
+
+    return {
+        openModal: openModal
+    };
+}]).factory('test', ['$cookies', function ($cookies) {
+    console.log('one times');
+    return 'jkk';
+}]).factory('util', ['I18N', function (I18N) {
+    function valiEmail(e) {
+        //验证邮箱
+        var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (reg.test(e)) {
+            return true;
+        } else {
+            return false;
         }
+    }
 
-        function snsLogin(provider, redirectUrl) {
-
-            var search = '/auth/' + provider + '?redirectUrl=' + (redirectUrl || '/');
-            if ($cookies.get('token')) {
-                search += '&access_token=' + $cookies.get('token').replace(/(^\")|(\"$)/g, "");
-            }
-            $window.location.href = search;
+    function checkpwd(pwd) {
+        //验证密码
+        var reg = /^[a-zA-Z0-9]{6,20}$/;
+        if (reg.test(pwd)) {
+            return true;
+        } else {
+            return false;
         }
-
-
-
-        return {
-            isLogin: isLogin,
-            login: login,
-            loginOut: loginOut,
-            isAdmin: isAdmin,
-            isLoginAsync: isLoginAsync,
-            isLike: isLike,
-            currentUser: currentUser,
-            snsLogin: snsLogin,
-        }
-    }])
-    .factory('ModalFactory', ['$modal', function ($modal) {
-
-        function openModal(controller, size) {
-            var openModalInstanse = $modal.open({
-                templateUrl: 'public/src/html/template/modal.html',
-                controller: controller,
-                size: size
-            });
-            openModalInstanse.result.then(function () {
-                //console.log('模态框展示成功');
-            }, function () {
-                //console.log('模态框展示失败');
-            });
-        }
-
-        return {
-            openModal: openModal
-        }
-}])
-    .factory('test', ['$cookies', function ($cookies) {
-        console.log('one times');
-        return 'jkk';
-}])
-    .factory('util', ['I18N', function (I18N) {
-        function valiEmail(e) { //验证邮箱
-            var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            if (reg.test(e)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function checkpwd(pwd) { //验证密码
-            var reg = /^[a-zA-Z0-9]{6,20}$/;
-            if (reg.test(pwd)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return {
-            valiEmail: valiEmail,
-            checkpwd: checkpwd
-        }
+    }
+    return {
+        valiEmail: valiEmail,
+        checkpwd: checkpwd
+    };
 }]);
+"use strict";
 
 appService.factory("I18N", ["env", function (env) {
     var zh_CN = {
@@ -427,7 +424,7 @@ appService.factory("I18N", ["env", function (env) {
         addTagText: "增加标签",
         addUserSuccess: "增加用户成功",
         addTagSuccess: "增加标签成功",
-        tagName: "标签名称",
+        tagName: "标签名称"
     };
     var en_US = {
         sign: "TT,overcome your fears!",
@@ -451,25 +448,25 @@ appService.factory("I18N", ["env", function (env) {
         addTagText: "Add Tag",
         addUserSuccess: "Add User Success",
         addTagSuccess: "Add Tag Success",
-        tagName: "Tag Name",
-    } 
+        tagName: "Tag Name"
+    };
 
     if ("development" === env) {
-        return  zh_CN      
+        return zh_CN;
     } else {
-        return  zh_CN
+        return zh_CN;
     }
-}]) 
+}]);
+"use strict";
 
 appResource.factory('User', ["$resource", "env", function ($resource, env) {
-    var url,
-        id;
+    var url, id;
     if ('development' === env) {
         url = '/public/data/:id';
         id = 'getme.json';
     } else {
         url = '/api/users/:id/:controller';
-        id = 'me'
+        id = 'me';
     }
     var userResource = $resource(url, {
         id: '@_id'
@@ -486,97 +483,97 @@ appResource.factory('User', ["$resource", "env", function ($resource, env) {
         get: userResource.get
     };
 }]);
+"use strict";
 
- appDirect.directive("gotop", ['$window', function ($window) {
-     return {
-         restrict: "E",
-         templateUrl: "public/src/html/directive/gotop.html",
-         replace: true,
-         link: function ($scope, element, attr) {
-             $scope.shows = false;
-             var documents = $('html,body');
-             $($window).on('scroll', function () {
-                 var topDistance = documents.scrollTop();
-                 if (this.pageYOffset > 200) {
-                     $scope.shows = true;
-                 } else {
-                     $scope.shows = false;
-                 }
-                 $scope.$apply();
-             });
-             element.on('click', function () {
-                 if (!documents.is('animate')) {
-                     documents.animate({
-                         scrollTop: 0
-                     }, 'slow')
-                 }
-             })
-         }
-     }
- }]).directive('comment', ['http', 'I18N', '$timeout', "Auther",function (http, I18N, $timeout,Auther) {
-     return {
-         restrict: "E",
-         templateUrl: "public/src/html/directive/comment.html",
-         replace: true,
-         link: function ($scope, element, attr) {
-             $scope.textareaShow = false;
-             $scope.vals = "";
-             $scope.reply = function (id, name) {
-                 if(!Auther.isLogin()){
-                     toastr.warning('请登录后评论~~，3Q~~！');
-                     return false;
-                 }
-                 $scope.vals = "@" + name;
-                 if ($scope.textareaShow) {
-                     $scope.textareaShow = false;
-                 } else {
-                     $scope.textareaShow = true;
-                 }
-             }
-             $scope.replyContent = function (cid) {
-                 $scope.$emit("commentDirective.2root", {
-                     cid: cid,
-                     replyCont: $scope.vals
-                 });
-             }
-             $scope.blur = function (e) {
-                 $timeout(function () {
-                     $scope.textareaShow = false;
-                 }, 300);
-             }
-         }
-     }
- }]).directive('reply', ['http', 'I18N', function (http, I18N) {
-     return {
-         restrict: "E",
-         templateUrl: "public/src/html/directive/reply.html",
-         replace: true,
-         link: function ($scope, element, attr) {
+appDirect.directive("gotop", ['$window', function ($window) {
+    return {
+        restrict: "E",
+        templateUrl: "public/src/html/directive/gotop.html",
+        replace: true,
+        link: function link($scope, element, attr) {
+            $scope.shows = false;
+            var documents = $('html,body');
+            $($window).on('scroll', function () {
+                var topDistance = documents.scrollTop();
+                if (this.pageYOffset > 200) {
+                    $scope.shows = true;
+                } else {
+                    $scope.shows = false;
+                }
+                $scope.$apply();
+            });
+            element.on('click', function () {
+                if (!documents.is('animate')) {
+                    documents.animate({
+                        scrollTop: 0
+                    }, 'slow');
+                }
+            });
+        }
+    };
+}]).directive('comment', ['http', 'I18N', '$timeout', "Auther", function (http, I18N, $timeout, Auther) {
+    return {
+        restrict: "E",
+        templateUrl: "public/src/html/directive/comment.html",
+        replace: true,
+        link: function link($scope, element, attr) {
+            $scope.textareaShow = false;
+            $scope.vals = "";
+            $scope.reply = function (id, name) {
+                if (!Auther.isLogin()) {
+                    toastr.warning('请登录后评论~~，3Q~~！');
+                    return false;
+                }
+                $scope.vals = "@" + name;
+                if ($scope.textareaShow) {
+                    $scope.textareaShow = false;
+                } else {
+                    $scope.textareaShow = true;
+                }
+            };
+            $scope.replyContent = function (cid) {
+                $scope.$emit("commentDirective.2root", {
+                    cid: cid,
+                    replyCont: $scope.vals
+                });
+            };
+            $scope.blur = function (e) {
+                $timeout(function () {
+                    $scope.textareaShow = false;
+                }, 300);
+            };
+        }
+    };
+}]).directive('reply', ['http', 'I18N', function (http, I18N) {
+    return {
+        restrict: "E",
+        templateUrl: "public/src/html/directive/reply.html",
+        replace: true,
+        link: function link($scope, element, attr) {}
+    };
+}]).directive('repeatStart', ['http', function (http) {
+    return {
+        restrict: "A",
+        link: function link($scope, element, attr) {
+            if (0 === $scope.$index) {
+                angular.element(element).addClass('active');
+            }
+        }
+    };
+}]).directive('markdownEditor', ['http', function (http) {
+    return {
+        restrict: "A",
+        replace: false,
+        link: function link($scope, element, attr) {
 
-         }
-     }
- }]).directive('repeatStart', ['http', function (http) {
-     return {
-         restrict: "A",
-         link: function ($scope, element, attr) {
-             if (0 === $scope.$index) {
-                 angular.element(element).addClass('active');
-             }
-         }
-     }
- }]).directive('markdownEditor', ['http', function (http) {
-     return {
-         restrict: "A",
-         replace: false,
-         link: function ($scope, element, attr) {
-
-             $(element).markdown({
-                 autofocus: false,
-                 savable: false
-             });
-         }
-     }
- }])
+            $(element).markdown({
+                autofocus: false,
+                savable: false
+            });
+        }
+    };
+}]);
+'use strict';
 
 appFilter.filter('customTime', function () {
     var nowTime = new Date().getTime();
@@ -608,14 +605,15 @@ appFilter.filter('customTime', function () {
             descTime = '刚刚';
         }
         return descTime;
-    };  
+    };
 });
+"use strict";
 
-appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther", "ModalFactory", function ($scope, http, I18N, interface, Auther, ModalFactory) {
+appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interfaces", "Auther", "ModalFactory", function ($scope, http, I18N, interfaces, Auther, ModalFactory) {
     $scope.blogscope = {
         I18N: {
             serviceError: I18N.serviceError,
-            loginToComment: I18N.loginToComment,
+            loginToComment: I18N.loginToComment
         },
         ngShowLoginBtn: true,
         ngShowAdmin: false,
@@ -623,20 +621,18 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
         preShow: true,
         nextShow: true,
         commentCont: ""
-    }
+    };
     $scope.isliked = false;
 
     var I18N = {
-            serviceError: I18N.serviceError,
-            prompt: I18N.prompt,
-        },
+        serviceError: I18N.serviceError,
+        prompt: I18N.prompt
+    },
         articleId = "",
         tagId = "";
 
     // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         articleId = toParams.cid;
@@ -658,7 +654,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
 
     $scope.$on('root.2blog', function (e, d) {
         sendCommentReply(d);
-    })
+    });
 
     $scope.sendBlogComment = sendBlogComment;
     $scope.toliked = toliked;
@@ -669,7 +665,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getBlogContent(id) {
         http.go({
             method: 'get',
-            url: interface.blog,
+            url: interfaces.blog,
             param: {
                 id: id
             }
@@ -686,7 +682,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getBlogComment(aid) {
         http.go({
             method: 'get',
-            url: interface.blogComment,
+            url: interfaces.blogComment,
             param: {
                 aid: aid
             }
@@ -694,7 +690,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             $scope.comments = d.data;
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //发送文章评论
@@ -706,7 +702,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
         }
         http.go({
             method: 'put',
-            url: interface.addComment,
+            url: interfaces.addComment,
             param: {
                 aid: articleId,
                 content: comment
@@ -718,14 +714,14 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             }
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //删除文章评论
     function delComment(id, index) {
         http.go({
             method: 'delete',
-            url: interface.delComment,
+            url: interfaces.delComment,
             param: {
                 id: id
             }
@@ -738,14 +734,14 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             }
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //发送回复
     function sendCommentReply(d) {
         http.go({
             method: 'put',
-            //url: interface.addReply,
+            //url: interfaces.addReply,
             url: "/api/comment/addReply",
             param: {
                 cid: d.cid,
@@ -769,13 +765,13 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             }
         }, function (d) {
             toastr.error(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     function delReply(cid, rid) {
         http.go({
             method: 'delete',
-            url: interface.delReply,
+            url: interfaces.delReply,
             param: {
                 cid: cid,
                 rid: rid
@@ -801,7 +797,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             }
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //赞
@@ -809,7 +805,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
         if (Auther.isLogin()) {
             http.go({
                 method: 'get',
-                url: interface.toggleLike,
+                url: interfaces.toggleLike,
                 param: {
                     id: articleId
                 }
@@ -818,7 +814,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
                 $scope.blog.like_count = d.count;
             }, function (d) {
                 toastr.warning(I18N.serviceError, I18N.prompt);
-            })
+            });
         } else {
             ModalFactory.openModal('confirmLoginCtrl');
         }
@@ -827,7 +823,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getPreNext(id, tag) {
         http.go({
             method: 'get',
-            url: interface.getPreNext,
+            url: interfaces.getPreNext,
             param: {
                 id: id,
                 tagId: tag
@@ -838,7 +834,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
             $scope.blogscope.nextShow = d.data.next.title ? true : false;
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 }]).controller('confirmLoginCtrl', ['$scope', '$state', 'I18N', '$modalInstance', function ($scope, $state, I18N, $modalInstance) {
     $scope.modalContent = "您还未登录，是否登录后喜欢!";
@@ -849,39 +845,35 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     $scope.ok = function () {
         $state.go('login');
         $modalInstance.close();
-    }
+    };
 
     $scope.cancel = function () {
         $modalInstance.dismiss();
-    }
-}])
+    };
+}]);
+"use strict";
 
-appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", function ($scope, http, I18N, interface) {
+appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interfaces", function ($scope, http, I18N, interfaces) {
     $scope.blogList = {
-        I18N: {
-
-        },
+        I18N: {},
         currentPage: 1
-    }
+    };
 
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         getTagList();
-    })
+    });
 
     function getBlogList(type) {
         http.go({
             method: "get",
-            url: interface.blogList,
+            url: interfaces.blogList,
             param: {
                 currentPage: $scope.blogList.currentPage,
                 tagId: type
@@ -890,51 +882,45 @@ appCtrl.controller("blogListCtrl", ["$scope", "http", "I18N", "interface", funct
             $scope.list = d.data;
         }, function (d) {
             toastr.error(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //请求分类列表
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
-            param: {
-                
-            }
+            url: interfaces.tag,
+            param: {}
         }).then(function (d) {
-            $scope.tags = d.data;   
+            $scope.tags = d.data;
             getBlogList($scope.tags[0]._id);
         }, function (d) {
             toastr.error('服务错误', I18N.prompt);
         });
     }
 
-    $scope.tagClick = function (name, index,id) {
+    $scope.tagClick = function (name, index, id) {
         $(".tags li:eq(" + index + ")").siblings().removeClass("active").end().addClass("active");
         getBlogList(id);
-    }   
-}])
+    };
+}]);
+"use strict";
 
-appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.edit = {
-        I18N: {
-
-        },
+        I18N: {},
         tags: [],
         blogTit: "",
         blogContent: "",
-        blog:{},
-        cid:""
-    }
+        blog: {},
+        cid: ""
+    };
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         $scope.edit.cid = toParams.cid;
@@ -946,22 +932,20 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
-            param: {
-
-            }
+            url: interfaces.tag,
+            param: {}
         }).then(function (d) {
             $scope.edit.tags = d.data;
         }, function (d) {
             toastr.error('服务错误', I18N.prompt);
         });
     }
-    
+
     //请求文章；
     function getBlogContent(cid) {
         http.go({
             method: 'get',
-            url: interface.getArticle,
+            url: interfaces.getArticle,
             param: {
                 id: cid
             }
@@ -986,9 +970,9 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
         }
         http.go({
             method: "put",
-            url: interface.updateBlog,
+            url: interfaces.updateBlog,
             param: {
-                id:$scope.edit.cid,
+                id: $scope.edit.cid,
                 title: tit,
                 status: type,
                 content: $scope.edit.blog.content
@@ -1008,8 +992,8 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
         }, function (d) {
             toastr.error(I18N.serviceError, I18N.prompt);
         });
-    } 
-    
+    }
+
     //打开图片模态框
     function openUploadModal() {
         var uploadInstance = $modal.open({
@@ -1020,24 +1004,26 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
             console.log("uploadModal open success");
         }, function () {
             console.log("uploadModal open error");
-        })
-    }
-    
-    //预览文章
-    function preview(id){
-        $state.go("blog",{
-            cid:id
         });
     }
-}])
 
-appCtrl.controller('footerCtrl', ["$scope", "I18N",function ($scope,I18N) {
-      $scope.footer = {
-          text:I18N.text,
-      }
-}])
+    //预览文章
+    function preview(id) {
+        $state.go("blog", {
+            cid: id
+        });
+    }
+}]);
+"use strict";
 
-appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$modal", "http", "I18N", "interface", "Auther", function ($scope,$rootScope,$state, $cookies, $modal, http, I18N, interface, Auther) {
+appCtrl.controller('footerCtrl', ["$scope", "I18N", function ($scope, I18N) {
+    $scope.footer = {
+        text: I18N.text
+    };
+}]);
+"use strict";
+
+appCtrl.controller("loginCtrl", ["$scope", "$rootScope", "$state", "$cookies", "$modal", "http", "I18N", "interfaces", "Auther", function ($scope, $rootScope, $state, $cookies, $modal, http, I18N, interfaces, Auther) {
     $scope.loginScope = {
         I18N: {
             login: I18N.login,
@@ -1045,24 +1031,21 @@ appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$
             nikeName: I18N.nikeName,
             password: I18N.password,
             authCode: I18N.authCode,
-            clickRefresh: I18N.clickRefresh,
+            clickRefresh: I18N.clickRefresh
         },
         userName: "",
         password: "",
-        authCode: "",
-    }
+        authCode: ""
+    };
 
     var I18N = {
         nikeNameTooLong: I18N.nikeNameTooLong,
         prompt: I18N.prompt,
         serviceError: I18N.serviceError,
-        passwordNotNull: I18N.passwordNotNull,
-    }
+        passwordNotNull: I18N.passwordNotNull
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         changeCode();
@@ -1089,8 +1072,8 @@ appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$
             //email: $scope.loginScope.userName,
             nickname: $scope.loginScope.userName,
             password: $scope.loginScope.password,
-            captcha: $scope.loginScope.authCode,
-        }
+            captcha: $scope.loginScope.authCode
+        };
 
         Auther.login(user).then(function (d) {
             toastr.success('登录成功！', I18N.prompt);
@@ -1099,41 +1082,37 @@ appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$
             $cookies.remove('token');
             $scope.loginScope.authCode = '';
             changeCode();
-        })
-    }
-    
-    $scope.snsLogin = function(type){
-        Auther.snsLogin(type,$rootScope.previousUrl);
-    }
-}])
+        });
+    };
 
-appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+    $scope.snsLogin = function (type) {
+        Auther.snsLogin(type, $rootScope.previousUrl);
+    };
+}]);
+"use strict";
+
+appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageBlog = {
-        I18N: {
-
-        },
+        I18N: {},
         lists: [],
         options: {
             currentPage: 1,
             numPages: 1,
             bigTotalItems: 30,
             itemsPerPage: 5
-        },
-    }
+        }
+    };
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         getManageBlogList();
     });
-    
+
     $scope.del = del;
     $scope.pageChanged = pageChanged;
 
@@ -1141,7 +1120,7 @@ appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function getManageBlogList() {
         http.go({
             method: "get",
-            url: interface.getEndBlogList,
+            url: interfaces.getEndBlogList,
             param: $scope.manageBlog.options
         }).then(function (d) {
             $scope.manageBlog.options.bigTotalItems = d.count;
@@ -1149,53 +1128,49 @@ appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             $scope.blogLists = d.data;
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //删除文章
     function del(id) {
         http.go({
             method: "delete",
-            url: interface.delBlog,
+            url: interfaces.delBlog,
             param: {
                 id: id
             }
         }).then(function (d) {
-            if(true === d.flag){
-                toastr.success('删除文章成功！',I18N.prompt);
-                $state.go('manageblog',null,{
-                    reload:true
+            if (true === d.flag) {
+                toastr.success('删除文章成功！', I18N.prompt);
+                $state.go('manageblog', null, {
+                    reload: true
                 });
-            }else{
-                toastr.warning('删除文章失败！',I18N.prompt);
+            } else {
+                toastr.warning('删除文章失败！', I18N.prompt);
             }
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
-    }  
-    
-        //分页
+        });
+    }
+
+    //分页
     function pageChanged() {
         getManageBlogList();
     }
-}])
+}]);
+"use strict";
 
-appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageTag = {
-        I18N: {
-
-        },
+        I18N: {},
         lists: []
-    }
+    };
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         getTagList();
@@ -1208,10 +1183,8 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
-            param: {
-
-            }
+            url: interfaces.tag,
+            param: {}
         }).then(function (d) {
             $scope.manageTag.lists = d.data;
         }, function (d) {
@@ -1224,19 +1197,15 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
         var addTagInstance = $modal.open({
             templateUrl: "public/src/html/admin/addTag.html",
             controller: "addTagCtrl"
-        })
-        addTagInstance.result.then(function () {
-
-        }, function () {
-
         });
+        addTagInstance.result.then(function () {}, function () {});
     }
 
     //删除标签
     function delTag(name, index) {
         http.go({
             method: "delete",
-            url: interface.delTag,
+            url: interfaces.delTag,
             param: {
                 name: name,
                 _id: index
@@ -1246,13 +1215,13 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
                 toastr.success("删除标签成功！", I18N.prompt);
                 $state.go("managetag", null, {
                     reload: true
-                })
+                });
             }
         }, function (d) {
             toastr.error(I18N.serviceError, I18N.prompt);
         });
     }
-}]).controller('addTagCtrl', ["$scope", "$modalInstance", "I18N", "util", "http", "interface", function ($scope, $modalInstance, I18N, util, http, interface) {
+}]).controller('addTagCtrl', ["$scope", "$modalInstance", "I18N", "util", "http", "interfaces", function ($scope, $modalInstance, I18N, util, http, interfaces) {
     $scope.modalTitle = I18N.addTagText;
     $scope.okBtnShow = true;
     $scope.cancelBtnShow = true;
@@ -1263,13 +1232,13 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
         },
         checkTagName: true,
         tagName: ""
-    }
+    };
 
     var I18N = {
         prompt: I18N.prompt,
         serviceError: I18N.serviceError,
-        addTagSuccess: I18N.addTagSuccess,
-    }
+        addTagSuccess: I18N.addTagSuccess
+    };
 
     $scope.ok = function () {
         var name = $scope.addTag.tagName;
@@ -1282,7 +1251,7 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
         }
         http.go({
             method: 'post',
-            url: interface.addTag,
+            url: interfaces.addTag,
             param: {
                 name: name
             }
@@ -1297,19 +1266,18 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
             } else {
                 toastr.error(I18N.serviceError, I18N.prompt);
             }
-        })
-    }
+        });
+    };
 
     $scope.cancel = function () {
         $modalInstance.dismiss();
-    }
-}])
+    };
+}]);
+"use strict";
 
-appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageUser = {
-        I18N: {
-
-        },
+        I18N: {},
         lists: [],
         options: {
             currentPage: 1,
@@ -1318,16 +1286,13 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             itemsPerPage: 5
         },
         maxSize: 5
-    }
+    };
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         getManageUserList();
@@ -1341,7 +1306,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function getManageUserList() {
         http.go({
             method: "get",
-            url: interface.userList,
+            url: interfaces.userList,
             //url: "/api/users/userlist",
             param: $scope.manageUser.options
         }).then(function (d) {
@@ -1350,14 +1315,14 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             $scope.userLists = d.data;
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //删除用户
     function delUser(id) {
         http.go({
             method: "delete",
-            url: interface.delUser,
+            url: interfaces.delUser,
             param: {
                 id: id
             }
@@ -1372,7 +1337,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             }
         }, function (d) {
             toastr.warning(I18N.serviceError, I18N.prompt);
-        })
+        });
     }
 
     //分页
@@ -1384,14 +1349,10 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
         var addUserModal = $modal.open({
             templateUrl: 'public/src/html/admin/addUser.html',
             controller: 'addUserCtrl'
-        })
-        addUserModal.result.then(function () {
-
-        }, function () {
-
         });
+        addUserModal.result.then(function () {}, function () {});
     }
-}]).controller('addUserCtrl', ["$scope", "$modalInstance", "I18N", "util", "http","interface", function ($scope, $modalInstance, I18N, util, http,interface) {
+}]).controller('addUserCtrl', ["$scope", "$modalInstance", "I18N", "util", "http", "interfaces", function ($scope, $modalInstance, I18N, util, http, interfaces) {
     $scope.modalTitle = I18N.addUserText;
     $scope.okBtnShow = true;
     $scope.cancelBtnShow = true;
@@ -1405,7 +1366,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             nikeName: I18N.nikeName,
             password: I18N.password,
             authCode: I18N.authCode,
-            clickRefresh: I18N.clickRefresh,
+            clickRefresh: I18N.clickRefresh
         },
         siginNickName: "",
         siginPassword: "",
@@ -1414,16 +1375,16 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
         checkName: true,
         checkPassword: true,
         checkEmail: true,
-        checkPhone: true,
-    }
+        checkPhone: true
+    };
 
     var I18N = {
         nikeNameTooLong: I18N.nikeNameTooLong,
         prompt: I18N.prompt,
         serviceError: I18N.serviceError,
         passwordNotNull: I18N.passwordNotNull,
-        addUserSuccess: I18N.addUserSuccess,
-    }
+        addUserSuccess: I18N.addUserSuccess
+    };
 
     $scope.ok = function () {
 
@@ -1434,7 +1395,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
         }
         http.go({
             method: 'put',
-            url: interface.addUser,
+            url: interfaces.addUser,
             param: {
                 nickName: result.nickName,
                 password: result.password,
@@ -1444,7 +1405,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
         }).then(function (d) {
             if (true === d.success) {
                 toastr.success(I18N.addUserSuccess, I18N.prompt);
-            }else{
+            } else {
                 toastr.warning(I18N.addUserSuccess, I18N.prompt);
             }
             $modalInstance.close();
@@ -1454,20 +1415,21 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             } else {
                 toastr.error(I18N.serviceError, I18N.prompt);
             }
-        })
-    }
+        });
+    };
 
     $scope.cancel = function () {
         $modalInstance.dismiss();
-    }
+    };
 
     function verfily() {
         var nickname = $scope.addUser.siginNickName,
             password = $scope.addUser.siginPassword,
             email = $scope.addUser.siginEmail,
             regNickName = /^(\w|[\u4E00-\u9FA5])*$/,
-            //regNickName = /^[\w\u4E00-\u9FA5]*$/,
-            regPhone = /^1\d{10}$/,
+
+        //regNickName = /^[\w\u4E00-\u9FA5]*$/,
+        regPhone = /^1\d{10}$/,
             phone = $scope.addUser.siginPhone;
 
         if ("" === nickname || !regNickName.test(nickname)) {
@@ -1506,31 +1468,27 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
             password: password,
             email: email,
             phone: phone
-        }
+        };
     }
-}])
+}]);
+"use strict";
 
-appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.release = {
-        I18N: {
-
-        },
+        I18N: {},
         tags: [],
         blogTit: "",
         blogContent: "",
-        imgUrl:"",
-        imgList:[],
-        publish_time:""
-    }
+        imgUrl: "",
+        imgList: [],
+        publish_time: ""
+    };
     var I18N = {
         serviceError: I18N.serviceError,
-        prompt: I18N.prompt,
-    }
+        prompt: I18N.prompt
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
     $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
         getTagList();
@@ -1540,10 +1498,8 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
-            param: {
-
-            }
+            url: interfaces.tag,
+            param: {}
         }).then(function (d) {
             $scope.release.tags = d.data;
         }, function (d) {
@@ -1565,16 +1521,16 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
         }
         http.go({
             method: "put",
-            url: interface.releaseBlog,
+            url: interfaces.releaseBlog,
             param: {
                 title: tit,
                 tags: tag,
                 status: type,
                 content: $scope.release.blogContent,
-                images:$scope.release.imgList,
-                publish_time:$scope.release.publish_time
-            }   
-        }).then(function (d) {   
+                images: $scope.release.imgList,
+                publish_time: $scope.release.publish_time
+            }
+        }).then(function (d) {
             if (true === d.success) {
                 if (0 === type) {
                     toastr.success("发布草稿成功！", I18N.prompt);
@@ -1588,8 +1544,8 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
             }
         }, function (d) {
             toastr.error(I18N.serviceError, I18N.prompt);
-        });  
-    }  
+        });
+    }
 
     function openUploadModal() {
         var uploadInstance = $modal.open({
@@ -1601,9 +1557,10 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
             $scope.release.imgUrl = d;
         }, function (d) {
             console.log('uploadModal open error');
-        })
+        });
     }
-}])
+}]);
+"use strict";
 
 appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$state", "I18N", "ModalFactory", "Auther", function ($rootScope, $scope, $modal, $cookies, $state, I18N, ModalFactory, Auther) {
     $rootScope.root = {
@@ -1611,19 +1568,17 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
         sign: I18N.sign,
         ngShowHeaderIcon: false,
         headerSrc: "https://s.tongwangyuan.com/blog/article/icon_7.jpg",
-        dayStyle:true
-    }
+        dayStyle: true
+    };
 
     var I18N = {
         serviceError: I18N.serviceError,
         prompt: I18N.prompt,
         loginOut: I18N.loginOut,
-        login: I18N.login,
-    }
+        login: I18N.login
 
-
-    // When route start changed.
-    $rootScope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
+        // When route start changed.
+    };$rootScope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
         Auther.isLoginAsync(function (logined) {
             if (!logined && toState.admin) {
                 ev.preventDefault();
@@ -1640,7 +1595,7 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
                 $state.go("home");
                 $rootScope.progressBar.complete();
             }
-        })
+        });
     });
 
     // When route successfully changed.
@@ -1650,12 +1605,12 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
                 $rootScope.root.ngShowHeaderIcon = true;
                 $rootScope.root.alt = Auther.currentUser.nickname;
                 $rootScope.root.loginOrOutTitle = I18N.loginOut;
-                $rootScope.root.headerSrc = Auther.currentUser.icon;    
+                $rootScope.root.headerSrc = Auther.currentUser.icon;
             } else {
                 $rootScope.root.loginOrOutTitle = I18N.login;
                 $rootScope.root.ngShowHeaderIcon = false;
             }
-        })
+        });
     });
 
     // sns 拦截？
@@ -1665,11 +1620,10 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
         var snsmsg = $cookies.get('snsmsg');
         if (snsmsg) {
             snsmsg = JSON.parse(snsmsg);
-            toastr.success(snsmsg.msg,snsmsg.msgtype);
+            toastr.success(snsmsg.msg, snsmsg.msgtype);
             $cookies.remove('snsmsg');
         }
     });
-
 
     $scope.siginOrOut = function (e) {
         e.stopPropagation();
@@ -1678,21 +1632,22 @@ appCtrl.controller("rootCtrl", ["$rootScope", "$scope", "$modal", "$cookies", "$
         } else {
             $state.go("login");
         }
-    }
-    $scope.changeDayOrNight = function(){
+    };
+    $scope.changeDayOrNight = function () {
         $scope.root.dayStyle = !$scope.root.dayStyle;
-    }
+    };
 
     $scope.$on('tag.2root', function (e, d) {
         $scope.$broadcast('root.2blogList', d);
-    })
+    });
 
     $scope.$on("commentDirective.2root", function (e, d) {
         $scope.$broadcast("root.2blog", d);
-    })
+    });
 }]);
+"use strict";
 
-appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http", "I18N", "interface", 'util', function ($scope, $state, $cookies, $modal, http, I18N, interface, util) {
+appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http", "I18N", "interfaces", 'util', function ($scope, $state, $cookies, $modal, http, I18N, interfaces, util) {
     $scope.siginScope = {
         I18N: {
             login: I18N.login,
@@ -1702,7 +1657,7 @@ appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http
             nikeName: I18N.nikeName,
             password: I18N.password,
             authCode: I18N.authCode,
-            clickRefresh: I18N.clickRefresh,
+            clickRefresh: I18N.clickRefresh
         },
         siginNickName: "",
         siginPassword: "",
@@ -1711,24 +1666,19 @@ appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http
         checkName: true,
         checkPassword: true,
         checkEmail: true,
-        checkPhone: true,
-    }
+        checkPhone: true
+    };
 
     var I18N = {
         nikeNameTooLong: I18N.nikeNameTooLong,
         prompt: I18N.prompt,
         serviceError: I18N.serviceError,
-        passwordNotNull: I18N.passwordNotNull,
-    }
+        passwordNotNull: I18N.passwordNotNull
 
-    // When route start changed.
-    $scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+        // When route start changed.
+    };$scope.$on('$stateChangeStart', function (ev, toState, toParams, fromState, fromParams) {});
     // When route successfully changed.
-    $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {
-
-    });
+    $scope.$on('$stateChangeSuccess', function (ev, toState, toParams, fromState, fromParams) {});
 
     $scope.sigin = function () {
         var result = verfily();
@@ -1738,7 +1688,7 @@ appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http
         }
         http.go({
             method: 'post',
-            url: interface.sigin,
+            url: interfaces.sigin,
             param: {
                 nickName: result.nickName,
                 password: result.password,
@@ -1748,102 +1698,99 @@ appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http
         }).then(function (d) {
             $state.go('login');
         }, function (d) {
-            if(d.err_message){
-                toastr.error(d.err_message,I18N.prompt);
-            }else{
-                toastr.error(I18N.serviceError,I18N.prompt);
+            if (d.err_message) {
+                toastr.error(d.err_message, I18N.prompt);
+            } else {
+                toastr.error(I18N.serviceError, I18N.prompt);
             }
-        })
-    }
+        });
+    };
 
     function verfily() {
         var nickname = $scope.siginScope.siginNickName,
             password = $scope.siginScope.siginPassword,
             email = $scope.siginScope.siginEmail,
             regNickName = /^(\w|[\u4E00-\u9FA5])*$/,
-            //regNickName = /^[\w\u4E00-\u9FA5]*$/,
-            regPhone = /^1\d{10}$/,
+
+        //regNickName = /^[\w\u4E00-\u9FA5]*$/,
+        regPhone = /^1\d{10}$/,
             phone = $scope.siginScope.siginPhone;
 
-            if ("" === nickname || !regNickName.test(nickname)) {
-                $scope.siginScope.checkName = false;
-                toastr.error("昵称只能由数字、汉子、字母组成！", I18N.prompt);
-                return false;
-            } else {
-                $scope.siginScope.checkName = true;
-            }
+        if ("" === nickname || !regNickName.test(nickname)) {
+            $scope.siginScope.checkName = false;
+            toastr.error("昵称只能由数字、汉子、字母组成！", I18N.prompt);
+            return false;
+        } else {
+            $scope.siginScope.checkName = true;
+        }
 
-            if ("" === password || !util.checkpwd(password)) {
-                $scope.siginScope.checkPassword = false;
-                toastr.error("密码只能由6-20位数字、字母组成，不能为空！", I18N.prompt);
-                return false;
-            } else {
-                $scope.siginScope.checkPassword = true;
-            }
+        if ("" === password || !util.checkpwd(password)) {
+            $scope.siginScope.checkPassword = false;
+            toastr.error("密码只能由6-20位数字、字母组成，不能为空！", I18N.prompt);
+            return false;
+        } else {
+            $scope.siginScope.checkPassword = true;
+        }
 
-            if ("" === email || !util.valiEmail(email)) {
-                $scope.siginScope.checkEmail = false;
-                toastr.error("邮箱格式错误！", I18N.prompt);
-                return false;
-            } else {
-                $scope.siginScope.checkEmail = true;
-            }
+        if ("" === email || !util.valiEmail(email)) {
+            $scope.siginScope.checkEmail = false;
+            toastr.error("邮箱格式错误！", I18N.prompt);
+            return false;
+        } else {
+            $scope.siginScope.checkEmail = true;
+        }
 
-            if ("" === phone || !regPhone.test(phone)) {
-                $scope.siginScope.checkPhone = false;
-                toastr.error("手机格式号码错误！", I18N.prompt);
-                return false;
-            } else {
-                $scope.siginScope.checkPhone = true;
-            }
-        
+        if ("" === phone || !regPhone.test(phone)) {
+            $scope.siginScope.checkPhone = false;
+            toastr.error("手机格式号码错误！", I18N.prompt);
+            return false;
+        } else {
+            $scope.siginScope.checkPhone = true;
+        }
 
         return {
             nickName: nickname,
             password: password,
             email: email,
             phone: phone
-        }
+        };
     }
-}])
+}]);
+"use strict";
 
-appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interface", function ($scope,$state,I18N, http, interface) {
+appCtrl.controller('tagCtrl', ["$scope", "$state", "I18N", "http", "interfaces", function ($scope, $state, I18N, http, interfaces) {
     $scope.tags = [];
 
     var I18N = {
         prompt: I18N.prompt,
         serviceError: I18N.serviceError
-    }
-    
+    };
+
     getTagList();
-    
+
     //请求分类列表
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
-            param: {
-
-            }
+            url: interfaces.tag,
+            param: {}
         }).then(function (d) {
             $scope.tags = d.data;
         }, function (d) {
             toastr.error('服务错误', I18N.prompt);
         });
     }
-    
-    
 
     $scope.tagClick = function (name, index) {
         $(".tags li:eq(" + index + ")").siblings().removeClass("active").end().addClass("active");
         getListByTag(name);
-    }
+    };
 
     //根据标签请求文章；
     function getListByTag(name) {
         http.go({
             method: "get",
-            url: interface.blogList,
+            url: interfaces.blogList,
             param: {
                 tag: name
             }
@@ -1853,24 +1800,26 @@ appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interface", fu
             toastr.error(I18N.serviceError, I18N.prompt);
         });
     }
-}])
+}]);
+"use strict";
 
-appCtrl.controller("testCtrl", ["$rootScope", "$scope","$modalInstance", "$cookies", "$state", "I18N", function ($rootScope, $scope,$modalInstance,$cookies, $state, I18N) {
+appCtrl.controller("testCtrl", ["$rootScope", "$scope", "$modalInstance", "$cookies", "$state", "I18N", function ($rootScope, $scope, $modalInstance, $cookies, $state, I18N) {
     $scope.modalContent = "切换灯光偏好~~";
     $scope.modalTitle = I18N.prompt;
     $scope.okBtnShow = true;
     $scope.cancelBtnShow = true;
-    
-    $scope.ok = function(){
+
+    $scope.ok = function () {
         $modalInstance.close();
-    }
-    
-    $scope.cancel = function(){
+    };
+
+    $scope.cancel = function () {
         $modalInstance.dismiss();
-    }
-}])
-    
-appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "$cookies", "$state", "I18N", "Upload", "interface", function ($rootScope, $scope, $modalInstance, $cookies, $state, I18N, Upload, interface) {
+    };
+}]);
+"use strict";
+
+appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "$cookies", "$state", "I18N", "Upload", "interfaces", function ($rootScope, $scope, $modalInstance, $cookies, $state, I18N, Upload, interfaces) {
     $scope.modalContent = "";
     $scope.modalTitle = I18N.prompt;
     $scope.okBtnShow = false;
@@ -1878,7 +1827,7 @@ appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "
     $scope.file;
 
     $scope.uploadImg = function (file) {
-        if (file && file.length) {     
+        if (file && file.length) {
             Upload.upload({
                 url: '/api/blog/uploadImg',
                 file: file[0]
@@ -1890,14 +1839,14 @@ appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "
                 err = err.data.error_msg || '上传图片失败.';
                 toastr.pop('error', '', err);
             });
-        }   
-    }
+        }
+    };
 
     $scope.ok = function () {
         $modalInstance.close();
-    }
+    };
 
     $scope.cancel = function () {
         $modalInstance.dismiss();
-    }
-}])
+    };
+}]);

@@ -1,4 +1,4 @@
-appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.edit = {
         I18N: {
 
@@ -29,7 +29,7 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
+            url: interfaces.tag,
             param: {
 
             }
@@ -44,7 +44,7 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
     function getBlogContent(cid) {
         http.go({
             method: 'get',
-            url: interface.getArticle,
+            url: interfaces.getArticle,
             param: {
                 id: cid
             }
@@ -69,7 +69,7 @@ appCtrl.controller("editBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state"
         }
         http.go({
             method: "put",
-            url: interface.updateBlog,
+            url: interfaces.updateBlog,
             param: {
                 id:$scope.edit.cid,
                 title: tit,

@@ -1,4 +1,4 @@
-appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageTag = {
         I18N: {
 
@@ -26,7 +26,7 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
+            url: interfaces.tag,
             param: {
 
             }
@@ -54,7 +54,7 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
     function delTag(name, index) {
         http.go({
             method: "delete",
-            url: interface.delTag,
+            url: interfaces.delTag,
             param: {
                 name: name,
                 _id: index
@@ -70,7 +70,7 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
             toastr.error(I18N.serviceError, I18N.prompt);
         });
     }
-}]).controller('addTagCtrl', ["$scope", "$modalInstance", "I18N", "util", "http", "interface", function ($scope, $modalInstance, I18N, util, http, interface) {
+}]).controller('addTagCtrl', ["$scope", "$modalInstance", "I18N", "util", "http", "interfaces", function ($scope, $modalInstance, I18N, util, http, interfaces) {
     $scope.modalTitle = I18N.addTagText;
     $scope.okBtnShow = true;
     $scope.cancelBtnShow = true;
@@ -100,7 +100,7 @@ appCtrl.controller("manageTagCtrl", ["$rootScope", "$scope", "$cookies", "$state
         }
         http.go({
             method: 'post',
-            url: interface.addTag,
+            url: interfaces.addTag,
             param: {
                 name: name
             }

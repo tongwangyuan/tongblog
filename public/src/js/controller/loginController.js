@@ -1,4 +1,4 @@
-appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$modal", "http", "I18N", "interface", "Auther", function ($scope,$rootScope,$state, $cookies, $modal, http, I18N, interface, Auther) {
+appCtrl.controller("loginCtrl", ["$scope","$rootScope", "$state", "$cookies", "$modal", "http", "I18N", "interfaces", "Auther", function ($scope,$rootScope,$state, $cookies, $modal, http, I18N, interfaces, Auther) {
     $scope.loginScope = {
         I18N: {
             login: I18N.login,

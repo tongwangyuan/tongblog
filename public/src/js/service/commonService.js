@@ -46,7 +46,7 @@ appService.value("env", "production") //development,production,test
             go: go
         }
 }])
-    .factory('interface', ["env", function (env) {
+    .factory('interfaces', ["env", function (env) {
 
         var developUrl = {
             tag: "public/data/tags.json", //标签    
@@ -116,7 +116,7 @@ appService.value("env", "production") //development,production,test
             return produceUrl
         }
 }])
-    .factory('Auther', ['$cookies', '$http', '$q', '$state', 'env', 'interface', 'I18N', "$timeout", "User", 'lodash', '$window', function ($cookies, $http, $q, $state, env, interface, I18N, $timeout, User, lodash, $window) {
+    .factory('Auther', ['$cookies', '$http', '$q', '$state', 'env', 'interfaces', 'I18N', "$timeout", "User", 'lodash', '$window', function ($cookies, $http, $q, $state, env, interfaces, I18N, $timeout, User, lodash, $window) {
         var currentUser = {};
         if ($cookies.get('token')) {
             currentUser = User.get();
@@ -127,7 +127,7 @@ appService.value("env", "production") //development,production,test
             var deferred = $q.defer();
             //为什么是post；passport-local验证字段使用req.body来取值得
             if ('development' !== env) {
-                $http.post(interface.login, {
+                $http.post(interfaces.login, {
                     //email: user.email,
                     nickname: user.nickname,
                     password: user.password,
@@ -147,7 +147,7 @@ appService.value("env", "production") //development,production,test
 
                 return deferred.promise;
             } else {
-                $http.get(interface.login, {
+                $http.get(interfaces.login, {
                     //email: user.email,
                     nickname: user.nickname,
                     password: user.password,

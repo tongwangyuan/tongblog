@@ -1,4 +1,4 @@
-appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.release = {
         I18N: {
 
@@ -28,7 +28,7 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
+            url: interfaces.tag,
             param: {
 
             }
@@ -53,7 +53,7 @@ appCtrl.controller("releaseBlogCtrl", ["$rootScope", "$scope", "$cookies", "$sta
         }
         http.go({
             method: "put",
-            url: interface.releaseBlog,
+            url: interfaces.releaseBlog,
             param: {
                 title: tit,
                 tags: tag,
