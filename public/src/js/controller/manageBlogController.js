@@ -1,4 +1,4 @@
-appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageBlog = {
         I18N: {
 
@@ -32,7 +32,7 @@ appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function getManageBlogList() {
         http.go({
             method: "get",
-            url: interface.getEndBlogList,
+            url: interfaces.getEndBlogList,
             param: $scope.manageBlog.options
         }).then(function (d) {
             $scope.manageBlog.options.bigTotalItems = d.count;
@@ -47,7 +47,7 @@ appCtrl.controller("manageBlogCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function del(id) {
         http.go({
             method: "delete",
-            url: interface.delBlog,
+            url: interfaces.delBlog,
             param: {
                 id: id
             }

@@ -1,4 +1,4 @@
-appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "$cookies", "$state", "I18N", "Upload", "interface", function ($rootScope, $scope, $modalInstance, $cookies, $state, I18N, Upload, interface) {
+appCtrl.controller("uploadImgCtrl", ["$rootScope", "$scope", "$modalInstance", "$cookies", "$state", "I18N", "Upload", "interfaces", function ($rootScope, $scope, $modalInstance, $cookies, $state, I18N, Upload, interfaces) {
     $scope.modalContent = "";
     $scope.modalTitle = I18N.prompt;
     $scope.okBtnShow = false;

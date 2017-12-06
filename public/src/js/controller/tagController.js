@@ -1,4 +1,4 @@
-appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interface", function ($scope,$state,I18N, http, interface) {
+appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interfaces", function ($scope,$state,I18N, http, interfaces) {
     $scope.tags = [];
 
     var I18N = {
@@ -12,7 +12,7 @@ appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interface", fu
     function getTagList() {
         http.go({
             method: "get",
-            url: interface.tag,
+            url: interfaces.tag,
             param: {
 
             }
@@ -34,7 +34,7 @@ appCtrl.controller('tagCtrl', ["$scope","$state","I18N", "http", "interface", fu
     function getListByTag(name) {
         http.go({
             method: "get",
-            url: interface.blogList,
+            url: interfaces.blogList,
             param: {
                 tag: name
             }

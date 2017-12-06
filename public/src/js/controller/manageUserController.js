@@ -1,4 +1,4 @@
-appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interface", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interface) {
+appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$state", "$modal", "I18N", "http", "interfaces", function ($rootScope, $scope, $cookies, $state, $modal, I18N, http, interfaces) {
     $scope.manageUser = {
         I18N: {
 
@@ -34,7 +34,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function getManageUserList() {
         http.go({
             method: "get",
-            url: interface.userList,
+            url: interfaces.userList,
             //url: "/api/users/userlist",
             param: $scope.manageUser.options
         }).then(function (d) {
@@ -50,7 +50,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
     function delUser(id) {
         http.go({
             method: "delete",
-            url: interface.delUser,
+            url: interfaces.delUser,
             param: {
                 id: id
             }
@@ -84,7 +84,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
 
         });
     }
-}]).controller('addUserCtrl', ["$scope", "$modalInstance", "I18N", "util", "http","interface", function ($scope, $modalInstance, I18N, util, http,interface) {
+}]).controller('addUserCtrl', ["$scope", "$modalInstance", "I18N", "util", "http","interfaces", function ($scope, $modalInstance, I18N, util, http,interfaces) {
     $scope.modalTitle = I18N.addUserText;
     $scope.okBtnShow = true;
     $scope.cancelBtnShow = true;
@@ -127,7 +127,7 @@ appCtrl.controller("manageUserCtrl", ["$rootScope", "$scope", "$cookies", "$stat
         }
         http.go({
             method: 'put',
-            url: interface.addUser,
+            url: interfaces.addUser,
             param: {
                 nickName: result.nickName,
                 password: result.password,

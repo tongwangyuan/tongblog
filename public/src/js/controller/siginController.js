@@ -1,4 +1,4 @@
-appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http", "I18N", "interface", 'util', function ($scope, $state, $cookies, $modal, http, I18N, interface, util) {
+appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http", "I18N", "interfaces", 'util', function ($scope, $state, $cookies, $modal, http, I18N, interfaces, util) {
     $scope.siginScope = {
         I18N: {
             login: I18N.login,
@@ -44,7 +44,7 @@ appCtrl.controller("siginCtrl", ["$scope", "$state", "$cookies", "$modal", "http
         }
         http.go({
             method: 'post',
-            url: interface.sigin,
+            url: interfaces.sigin,
             param: {
                 nickName: result.nickName,
                 password: result.password,

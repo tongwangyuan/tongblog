@@ -1,4 +1,4 @@
-appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther", "ModalFactory", function ($scope, http, I18N, interface, Auther, ModalFactory) {
+appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interfaces", "Auther", "ModalFactory", function ($scope, http, I18N, interfaces, Auther, ModalFactory) {
     $scope.blogscope = {
         I18N: {
             serviceError: I18N.serviceError,
@@ -56,7 +56,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getBlogContent(id) {
         http.go({
             method: 'get',
-            url: interface.blog,
+            url: interfaces.blog,
             param: {
                 id: id
             }
@@ -73,7 +73,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getBlogComment(aid) {
         http.go({
             method: 'get',
-            url: interface.blogComment,
+            url: interfaces.blogComment,
             param: {
                 aid: aid
             }
@@ -93,7 +93,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
         }
         http.go({
             method: 'put',
-            url: interface.addComment,
+            url: interfaces.addComment,
             param: {
                 aid: articleId,
                 content: comment
@@ -112,7 +112,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function delComment(id, index) {
         http.go({
             method: 'delete',
-            url: interface.delComment,
+            url: interfaces.delComment,
             param: {
                 id: id
             }
@@ -132,7 +132,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function sendCommentReply(d) {
         http.go({
             method: 'put',
-            //url: interface.addReply,
+            //url: interfaces.addReply,
             url: "/api/comment/addReply",
             param: {
                 cid: d.cid,
@@ -162,7 +162,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function delReply(cid, rid) {
         http.go({
             method: 'delete',
-            url: interface.delReply,
+            url: interfaces.delReply,
             param: {
                 cid: cid,
                 rid: rid
@@ -196,7 +196,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
         if (Auther.isLogin()) {
             http.go({
                 method: 'get',
-                url: interface.toggleLike,
+                url: interfaces.toggleLike,
                 param: {
                     id: articleId
                 }
@@ -214,7 +214,7 @@ appCtrl.controller("blogCtrl", ["$scope", "http", "I18N", "interface", "Auther",
     function getPreNext(id, tag) {
         http.go({
             method: 'get',
-            url: interface.getPreNext,
+            url: interfaces.getPreNext,
             param: {
                 id: id,
                 tagId: tag

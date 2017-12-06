@@ -2,6 +2,7 @@ var gulp = require("gulp");
 var concat = require("gulp-concat");
 var watch = require("gulp-watch");
 var clean = require("gulp-clean");
+var babel = require("gulp-babel");// for es6
 var revReplace = require("gulp-rev-replace");
 var fileincluder = require("gulp-file-include"); //html  include
 var revAll = require("gulp-rev-all"); //html  include
@@ -32,7 +33,7 @@ var objSrc = {
 }
 
 //html includer
-gulp.task("fileincluder", function () {
+gulp.task("fileincluder", function () {  
 
     return gulp.src("public/src/html/index.html")
         .pipe(fileincluder({
@@ -47,6 +48,10 @@ gulp.task("fileincluder", function () {
 //js
 gulp.task('js', function () {
     gulp.src(objSrc.jsSrc)
+        .pipe(babel({
+            "presets": ["env"],
+            "plugins": ['transform-regenerator','transform-es2015-spread']
+        }))
         .pipe(concat("app.js"))
         .pipe(gulp.dest("./public/dist/js/"))
         .pipe(browserSync.reload({
