@@ -1,0 +1,884 @@
+@charset "UTF-8";
+/*--------------阻止页面长按选中功能------------*/
+*:not(input, textarea) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*----------------阻止数字按钮出现选择按钮-----------*/
+.deal::-webkit-textfield-decoration-container {
+  background-color: #f0f3f9;
+}
+
+.deal::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.deal::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  /* 有无看不出差别 */
+}
+
+/*--------------------针对火狐浏览器的hack  放在页面里面有效果---------------------------*/
+@-moz-document url-prefix() {
+  .xxx {
+    background: url();
+  }
+}
+
+html, body {
+  min-height: 100%;
+}
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover, a:active, a:focus, a:visited {
+  text-decoration: none !important;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset, img {
+  border: 0;
+  vertical-align: middle;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+sub {
+  vertical-align: text-bottom;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  *font-size: 100%;
+}
+
+legend {
+  color: #000;
+}
+
+/* clearFix */
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix:after {
+  clear: both;
+  content: ".";
+  display: block;
+  font-size: 0;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+
+.clear {
+  clear: both;
+}
+
+/*---------------解决google浏览器输入框背景色问题--------------------------------*/
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+/*-----------------------------table----------td-------------------------------------------*/
+table {
+  table-layout: auto;
+}
+
+td {
+  word-break: keep-all;
+  /* 不换行 */
+  white-space: nowrap;
+  /* 不换行 */
+  overflow: hidden;
+  /* 内容超出宽度时隐藏超出部分的内容 */
+  text-overflow: ellipsis;
+}
+
+/*----------------------------------------------------弹出框-----showAlert1()---------------------------------------*/
+/*.opacityBg{position:absolute;width:100%;height:100%;top:0;background:url(../images/loading_bg.png) 0 0 repeat; z-index:100;}*/
+.divbox2 {
+  position: fixed;
+  display: block;
+  color: #A0A0A0;
+  width: 70%;
+  padding: 20px;
+  border-radius: 10px;
+  background: #eaeaea;
+}
+
+.divbox2 .title1 {
+  margin: 0 0 15px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #B72626;
+}
+
+.divbox2 .title1, .divbox2 .alertText {
+  text-align: center;
+  font-size: 18px;
+}
+
+.divbox2 .showAlert1Text {
+  text-align: center;
+  font-size: 18px;
+}
+
+.button1 {
+  display: block;
+  color: #fff;
+  font-size: 18px;
+  border: 0;
+  width: 80%;
+  height: 44px;
+  line-height: 44px;
+  margin: 20px auto 10px;
+  font-weight: bold;
+  text-align: center;
+  background: #4079e4;
+  background-size: 100% 100%;
+}
+
+.opacitya {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.mb {
+  width: 100%;
+  height: 100%;
+  background: url(../image/img_mengban.png) 0 0 repeat;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+}
+
+.agreement {
+  width: 80%;
+  margin: 20px auto;
+  background: #ffffff;
+}
+
+.agreement h3 {
+  font-size: 25px;
+  text-align: center;
+}
+
+/*-------------------------------------------公共内容---------------------------------------------*/
+body,
+a {
+  color: aquamarine;
+}
+
+body {
+  padding-bottom: 25px;
+  min-height: 700px;
+  position: relative;
+}
+
+textarea {
+  resize: none;
+}
+
+/*common*/
+.mg10 {
+  margin: 10px;
+}
+
+.w900 {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.btnThis,
+.btnThis:hover,
+.btnThis:focus,
+.btnThis:visited,
+.btnThis:active {
+  background: aquamarine;
+  color: #fff;
+  font-weight: 800;
+}
+
+/*--------------footer-----------*/
+.footer {
+  margin: 5px auto 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer div {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+}
+
+@media screen and (min-width: 900px) {
+  .w900 {
+    width: 900px;
+    margin: 0 auto;
+  }
+  span.time {
+    font-size: 18px;
+  }
+  .head span.menu {
+    display: inline-block;
+    float: right;
+  }
+  header.head span.sign {
+    font-size: 25px;
+  }
+  header.head {
+    padding: 0 50px;
+    font-size: 25px;
+  }
+}
+
+/*------------directive----------*/
+.gotop {
+  width: 35px;
+  height: 35px;
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+}
+
+.gotop i {
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  font-size: 35px;
+}
+
+/*------------评论---------------*/
+.comment {
+  padding: 5px;
+  border-top: 1px solid aquamarine;
+  border-bottom: 1px solid aquamarine;
+}
+
+.comment-info .icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  float: left;
+  margin: 0 10px;
+}
+
+span.commentUserName {
+  font-weight: 800;
+  margin: 0 10px;
+}
+
+.comment-info .icon img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.rpBtn span {
+  float: right;
+  color: aquamarine;
+}
+
+.form-reply {
+  height: 60px;
+  /*overflow-y: scroll;*/
+  padding: 0 15px;
+}
+
+.form-reply textarea {
+  width: 100%;
+  height: 100%;
+}
+
+/*--------reply------------------*/
+.reply {
+  border-top: 1px dashed aquamarine;
+  border-bottom: 1px dashed aquamarine;
+  border-left: 5px solid aquamarine;
+  padding: 5px 0 5px 10px;
+}
+
+.reply-content {
+  margin-bottom: 8px;
+}
+
+.reply-name {
+  margin-right: 10px;
+}
+
+i.fa-reply,
+i.fa-pencil-square-o,
+i.fa-pencil,
+i.fa-heart,
+i.fa-trash,
+i.fa-heart-o {
+  font-size: 20px;
+  color: aquamarine;
+}
+
+span.remove-comment {
+  float: right;
+}
+
+/*-------回复textarea------------------*/
+.form-reply {
+  margin: 5px;
+  position: relative;
+}
+
+.form-reply textarea {
+  border-radius: 5px;
+}
+
+i.fa-pencil-square-o {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+/*-------support------*/
+.support {
+  margin: 5px;
+}
+
+.support i {
+  margin: 5px 10px;
+  border: 1px solid aquamarine;
+}
+
+i.liked {
+  color: aquamarine;
+}
+
+i.noliked {
+  color: #f1f1f1;
+  border: 1px solid aquamarine;
+}
+
+/*------------------评论textarea----------------*/
+.commentArea {
+  padding: 10px;
+}
+
+.commentArea textarea {
+  width: 100%;
+}
+
+.cmBtn {
+  background: aquamarine;
+  color: #fff;
+}
+
+/*-----------------admin----------------------*/
+.tableBlog {
+  width: 80%;
+  margin: 5px auto;
+}
+
+.tableBlog tr {
+  height: 45px;
+  padding: 5px;
+}
+
+.tableBlog td {
+  margin: 5px 5px;
+}
+
+/*----------------login--------------------------*/
+img.authCodeSrc {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+input.error {
+  border: 1px solid red;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: aquamarine;
+  border-color: aquamarine;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: aquamarine;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.modal.in .modal-dialog {
+  margin-top: 150px;
+}
+
+/*-----------------sns--------------*/
+.sns-container {
+  margin-top: 20px;
+}
+
+.sns-container h3 {
+  text-align: center;
+}
+
+.sns-container ul {
+  margin: 0 auto;
+  width: 150px;
+}
+
+.sns-container li {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  float: left;
+  background: #f1f1f1;
+}
+
+.sns-container li a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.sns-container li a.sns-weibo:hover {
+  background: #49be38;
+  color: #fff;
+}
+
+.sns-container li a.sns-qq:hover {
+  background: #f57e42;
+  color: #fff;
+}
+
+.sns-container li a.sns-github:hover {
+  background: aqua;
+  color: #fff;
+}
+
+/*------tag----------*/
+/*-------------blog--------*/
+/*-----hardoop----*/
+body,
+a {
+  color: aquamarine;
+}
+
+body {
+  padding-bottom: 25px;
+  min-height: 700px;
+  position: relative;
+}
+
+textarea {
+  resize: none;
+}
+
+/*------mixin-------------*/
+/*-----tags--------*/
+/*----------list-------*/
+/*----------blog----------------*/
+/*-----login-----------*/
+.day-style {
+  background: #fff;
+  color: aquamarine;
+}
+
+.day-style header.head {
+  /*height: 60px;*/
+  min-height: 60px;
+  line-height: 60px;
+  color: aquamarine;
+  padding: 0 15px;
+  font-size: 22px;
+  font-weight: 900;
+  border-bottom: 1px solid aquamarine;
+}
+
+.day-style header.head a {
+  color: inherit;
+}
+
+.day-style header.head span.sign {
+  font-size: 18px;
+}
+
+.day-style header.head span.menu {
+  display: inline-block;
+  float: right;
+}
+
+.day-style header.head span.menu i {
+  cursor: pointer;
+}
+
+.day-style header.head span.headIcon {
+  display: inline-block;
+  float: right;
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 0;
+}
+
+.day-style header.head span.headIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.day-style .tags {
+  margin: 5px auto;
+}
+
+.day-style .tags li {
+  float: left;
+  display: inline-block;
+  border: 1px solid aquamarine;
+  border-radius: 3px;
+  margin: 5px 15px;
+  padding: 5px 15px;
+  background: #fff;
+  color: aquamarine;
+}
+
+.day-style .tags li:hover {
+  color: #fff;
+  background: aquamarine;
+}
+
+.day-style .tags li a {
+  color: inherit;
+}
+
+.day-style .tags li.active {
+  color: #fff;
+  background: aquamarine;
+}
+
+.day-style .blog-list {
+  margin: 5px auto;
+}
+
+.day-style .blog-list li.blog-item {
+  margin: 0 0 10px;
+  padding: 5px 0;
+  border-top: 1px solid aquamarine;
+}
+
+.day-style .blog-list li.blog-item a.preImg {
+  float: right;
+}
+
+.day-style .blog-list li.blog-item a.preImg img {
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
+}
+
+.day-style .blog-list li.blog-item div.preTitle {
+  position: relative;
+  margin: 0 200px 0 0;
+  height: 200px;
+  color: aquamarine;
+}
+
+.day-style .blog-list li.blog-item div.preTitle div.dataDiv {
+  position: absolute;
+  bottom: 10px;
+  font-size: 20px;
+}
+
+.day-style .blog-list li.blog-item div.preTitle div.dataDiv i {
+  margin-right: 15px;
+  color: aquamarine;
+}
+
+.day-style .blog-list li.blog-item div.preTitle span.time {
+  font-size: 16px;
+}
+
+.day-style .blog-list li.blog-item div.preTitle a.title {
+  color: aquamarine;
+}
+
+.day-style .blog-title h2 {
+  text-align: center;
+  color: #222;
+}
+
+.day-style .blogContent {
+  color: #222;
+}
+
+.day-style .blogContent .haroopad {
+  color: #222;
+  background: #fff;
+}
+
+.day-style .blogContent .support i.fa-heart {
+  -webkit-transform: rotate(360deg) scale(1.3, 1.3);
+  -moz-transform: rotate(360deg) scale(1.3, 1.3);
+  transform: rotate(360deg) scale(1.3, 1.3);
+  -webkit-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.day-style .up-and-down {
+  margin: 5px 0;
+}
+
+.day-style .loginCon {
+  background: #fff;
+}
+
+.day-style .siginCont {
+  background: #fff;
+}
+
+.night-style {
+  background: #3f3f3f;
+  color: #999;
+}
+
+.night-style header.head {
+  /*height: 60px;*/
+  min-height: 60px;
+  line-height: 60px;
+  color: #999;
+  padding: 0 15px;
+  font-size: 22px;
+  font-weight: 900;
+  border-bottom: 1px solid #999;
+}
+
+.night-style header.head a {
+  color: inherit;
+}
+
+.night-style header.head span.sign {
+  font-size: 18px;
+}
+
+.night-style header.head span.menu {
+  display: inline-block;
+  float: right;
+}
+
+.night-style header.head span.menu i {
+  cursor: pointer;
+}
+
+.night-style header.head span.headIcon {
+  display: inline-block;
+  float: right;
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 0;
+}
+
+.night-style header.head span.headIcon img {
+  width: 100%;
+  height: 100%;
+}
+
+.night-style .tags {
+  margin: 5px auto;
+}
+
+.night-style .tags li {
+  float: left;
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin: 5px 15px;
+  padding: 5px 15px;
+  background: #2f2f2f;
+  color: #999;
+}
+
+.night-style .tags li:hover {
+  color: #fff;
+  background: #000;
+}
+
+.night-style .tags li a {
+  color: inherit;
+}
+
+.night-style .tags li.active {
+  color: #fff;
+  background: #000;
+}
+
+.night-style .blog-list {
+  margin: 5px auto;
+}
+
+.night-style .blog-list li.blog-item {
+  margin: 0 0 10px;
+  padding: 5px 0;
+  border-top: 1px solid #999;
+}
+
+.night-style .blog-list li.blog-item a.preImg {
+  float: right;
+}
+
+.night-style .blog-list li.blog-item a.preImg img {
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
+}
+
+.night-style .blog-list li.blog-item div.preTitle {
+  position: relative;
+  margin: 0 200px 0 0;
+  height: 200px;
+  color: #999;
+}
+
+.night-style .blog-list li.blog-item div.preTitle div.dataDiv {
+  position: absolute;
+  bottom: 10px;
+  font-size: 20px;
+}
+
+.night-style .blog-list li.blog-item div.preTitle div.dataDiv i {
+  margin-right: 15px;
+  color: #999;
+}
+
+.night-style .blog-list li.blog-item div.preTitle span.time {
+  font-size: 16px;
+}
+
+.night-style .blog-list li.blog-item div.preTitle a.title {
+  color: #999;
+}
+
+.night-style .blog-title h2 {
+  text-align: center;
+  color: #999;
+}
+
+.night-style .blogContent {
+  color: #999;
+}
+
+.night-style .blogContent .haroopad {
+  color: #999;
+  background: #3f3f3f;
+}
+
+.night-style .blogContent .support i.fa-heart {
+  -webkit-transform: rotate(360deg) scale(1.3, 1.3);
+  -moz-transform: rotate(360deg) scale(1.3, 1.3);
+  transform: rotate(360deg) scale(1.3, 1.3);
+  -webkit-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.night-style .up-and-down {
+  margin: 5px 0;
+}
+
+.night-style .loginCon {
+  background: #3f3f3f;
+}
+
+.night-style .siginCont {
+  background: #3f3f3f;
+}
+
+@media screen and (min-width: 900px) {
+  .w900 {
+    width: 900px;
+    margin: 0 auto;
+  }
+  span.time {
+    font-size: 18px;
+  }
+  .head span.menu {
+    display: inline-block;
+    float: right;
+  }
+  header.head span.sign {
+    font-size: 25px !important;
+  }
+  header.head {
+    padding: 0 50px !important;
+    font-size: 25px !important;
+  }
+}
