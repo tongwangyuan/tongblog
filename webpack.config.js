@@ -1,10 +1,13 @@
-var path = require("path");
-var htmlWebpackPlugin = require("html-webpack-plugin");
-var extractTextPlugin = require("extract-text-webpack-plugin");
-var config = {
+const path = require("path");
+const htmlWebpackPlugin = require("html-webpack-plugin");
+const extractTextPlugin = require("extract-text-webpack-plugin");
+const cleanPlugin = require("clean-webpack-plugin");
+const webpack = require("webpack");
+let config = {
   devtool: "source-map",
   context:path.resolve(__dirname, "webpack"),
   entry: {
+    ployfill:"../node_modules/babel-polyfill/dist/polyfill.min.js",
     entry: "./src/js/entry.js",
     app: "./src/js/app.js"
   },
@@ -16,7 +19,8 @@ var config = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["env"]
+            "presets": ["env"],
+            "plugins": ['transform-regenerator','transform-es2015-spread']
             //plugins: [require('babel-plugin-transform-object-rest-spread')]
           }
         }
@@ -42,7 +46,11 @@ var config = {
     filename: "[name].js",
     sourceMapFilename: "[name].map"
   },
+  devServer:{
+    hot:true
+  },
   plugins: [
+    //new cleanPlugin([path.resolve(__dirname, "webpack/dist")]),
     new htmlWebpackPlugin({
       title: "my firt webpack app",
       filename: "../index.html", //指定目录,默认是output的目录(its bad begin with ouput dir)，可以['../',path.resolve(__dirname, 'webpack/dist/')+"/inde.html"],
@@ -52,7 +60,10 @@ var config = {
         collapseInlineTagWhitespace: true //消除行内元素间隙
       }
     }),
-    new extractTextPlugin("../css/apps.css")
+    //new extractTextPlugin(path.resolve(__dirname,"webpack/dist/css/apps.css")),
+    new extractTextPlugin("css/apps.css"),
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
 module.exports = config;
