@@ -1,3 +1,2 @@
-module.exports = {
-    ww:"ww"
-}
+export let ww = "wwshort";
+export let www = "www";
