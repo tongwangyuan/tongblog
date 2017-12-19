@@ -163,6 +163,11 @@ textarea {
         .haroopad {
             color: $fontColor;
             background: $bgColor;
+            pre>code.language-js{
+                background: #23241f;
+                color: #fff;
+                letter-spacing: 1px;
+            }  
         }
         .support {
             i.fa-heart {

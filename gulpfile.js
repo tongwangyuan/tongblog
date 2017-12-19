@@ -48,21 +48,21 @@ gulp.task("fileincluder", function () {
 //js
 gulp.task('js', function () {
     gulp.src(objSrc.jsSrc)
-        /* .pipe(babel({
+        .pipe(babel({
             "presets": ["env"],
             "plugins": ['transform-regenerator','transform-es2015-spread']
-        })) */
-        .pipe(babel({
+        }))
+        /* .pipe(babel({
             "presets": [[
                 "env",
                 {
-                  /* "targets": {
+                  "targets": {
                     "browsers": [
                       "last 2 versions",
                       "safari >= 7"
                     ],
                     "node": "current"
-                  }, */
+                  },
                   "modules": false,
                   "debug": true,
                   "useBuiltIns": false,
@@ -71,7 +71,7 @@ gulp.task('js', function () {
                 }
               ]],   
             "plugins": ['transform-regenerator','transform-es2015-spread']
-          }))
+          })) */
         .pipe(concat("app.js"))
         .pipe(gulp.dest("./public/dist/js/"))
         .pipe(browserSync.reload({
