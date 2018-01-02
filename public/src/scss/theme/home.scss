@@ -143,6 +143,9 @@ textarea {
                 }
                 a.title {
                     color: $fontcolor;
+                    h3{
+                        font-size: 16px;
+                    }
                 }
             }
         }
@@ -236,5 +239,8 @@ textarea {
     header.head {
         padding: 0 50px !important;
         font-size: 25px !important;
+    }
+    a.title h3{
+        font-size: 24px !important;
     }
 }
