@@ -702,6 +702,14 @@ textarea {
   transition: all 2s ease;
 }
 
+.day-style .blogContent ul {
+  list-style-type: disc;
+}
+
+.day-style .blogContent ul ul {
+  margin-left: 20px;
+}
+
 .day-style .up-and-down {
   margin: 5px 0;
 }
@@ -868,6 +876,14 @@ textarea {
   -webkit-transition: all 2s ease;
   -o-transition: all 2s ease;
   transition: all 2s ease;
+}
+
+.night-style .blogContent ul {
+  list-style-type: disc;
+}
+
+.night-style .blogContent ul ul {
+  margin-left: 20px;
 }
 
 .night-style .up-and-down {
